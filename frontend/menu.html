@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú</title>
+    <link rel="stylesheet" href="Styles/menu.css"/>
+</head>
+<body>
+    <div class="menu-container" id="menuDiv">
+      <img src="Images/CFE Logo Blanco.png" alt="Logo de CFE">
+      <h2>Registro de Tiempo Extra</h2>
+      <form id="formTiempoExtra">
+        <label for="trabajador">Nombre del trabajador</label>
+        <input type="text" id="trabajador" required/>
+
+        <label for="horas">Horas extra</label>
+        <input type="number" id="horas" min="0" step="1" required/>
+
+        <label for="fecha">Fecha</label>
+        <input type="date" id="fecha" required/>
+
+        <button type="submit">Generar PDF</button>
+        <button type="button" id="btnRegresar">Regresar al login</button>
+      </form>
+    </div>
+
+    <script src="Scripts/jquery-3.7.1.min.js"></script>
+    <script src="Scripts/menu.js"></script>
+</body>
+</html>
