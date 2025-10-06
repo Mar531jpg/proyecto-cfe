@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "../../../../xampp/htdocs/proyecto-cfe"
+		}
+	],
+	"settings": {
+		"liveServer.settings.port": 5501
+	}
+}
