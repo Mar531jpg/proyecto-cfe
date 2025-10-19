@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFE Bitácora Técnica Digital</title>
+  <link rel="stylesheet" href="/frontend/Styles/navegador.css">
+</head>
+<body>
+  <header>
+    <h1>CFE</h1>
+    <h2>Bitácora Técnica Digital</h2>
+    <p><strong>Zona Istmo</strong></p>
+  </header>
+
+  <nav>
+    <!-- USUARIOS -->
+    <div class="dropdown">
+      <button>👥 USUARIOS ⬇</button>
+      <div class="dropdown-content">
+        <a href="#" onclick="mostrar('formSolicitud')">🧾 Solicitud (Trabajador)</a>
+        <a href="#" onclick="mostrar('formAprobacion')">✅ Aprobación (Jefe de Departamento)</a>
+      </div>
+    </div>
+
+    <!-- FORMULARIOS -->
+    <div class="dropdown">
+      <button>📋 FORMULARIOS ⬇</button>
+      <div class="dropdown-content">
+        <a href="#" onclick="mostrar('formSolicitud')">⏱️ Tiempo Extra</a>
+        <a href="#" onclick="mostrar('formAprobacion')">💼 Viáticos</a>
+      </div>
+    </div>
+
+    <!-- CATEGORÍAS -->
+    <div class="dropdown">
+      <button>🏷️ CATEGORÍAS ⬇</button>
+      <div class="dropdown-content">
+        <span class="grupo">Personal Directivo (Jefes)</span>
+        <a href="#" onclick="mostrar('formAprobacion')">Jefe de oficina</a>
+        <a href="#" onclick="mostrar('formAprobacion')">Jefe de departamento</a>
+        <a href="#" onclick="mostrar('formAprobacion')">Superintendente</a>
+
+        <span class="grupo">Personal Técnico y Operativo (Solicitantes)</span>
+        <a href="#" onclick="mostrar('formSolicitud')">Supervisor</a>
+        <a href="#" onclick="mostrar('formSolicitud')">Cabo liniero</a>
+        <a href="#" onclick="mostrar('formSolicitud')">Liniero</a>
+        <a href="#" onclick="mostrar('formSolicitud')">Ayudante liniero</a>
+        <a href="#" onclick="mostrar('formSolicitud')">Técnico</a>
+        <a href="#" onclick="mostrar('formSolicitud')">Electricista</a>
+        <a href="#" onclick="mostrar('formSolicitud')">Ayudante de electricista</a>
+
+        <span class="grupo">Comunicaciones y Control</span>
+        <a href="#" onclick="mostrar('formSolicitud')">Profesionista de comunicaciones</a>
+        <a href="#" onclick="mostrar('formSolicitud')">Técnico de comunicaciones</a>
+        <a href="#" onclick="mostrar('formSolicitud')">Técnico de control</a>
+
+        <span class="grupo">Administrativo</span>
+        <a href="#" onclick="mostrar('formSolicitud')">Administrativo</a>
+      </div>
+    </div>
+
+    <button onclick="window.print()">🖨️ IMPRIMIR REPORTE</button>
+  </nav>
+
+  <main>
+    <!-- FORMULARIO DE SOLICITUD -->
+    <div id="formSolicitud" class="formulario">
+      <h3>Solicitud de Tiempo Extra o Viáticos</h3>
+
+      <label>Nombre del trabajador:</label>
+      <input type="text" placeholder="Ingresa tu nombre completo">
+
+      <label>Categoría:</label>
+      <input type="text" placeholder="Ejemplo: Liniero, Técnico, Administrativo...">
+
+      <label>Departamento / Zona:</label>
+      <input type="text" placeholder="Ejemplo: Zona Istmo">
+
+      <label>Periodo trabajado:</label>
+      <input type="text" placeholder="Del 01 al 04 de abril 2025">
+
+      <label>Tipo de solicitud:</label>
+      <select>
+        <option>Tiempo Extra</option>
+        <option>Viáticos</option>
+      </select>
+
+      <label>Descripción de actividades:</label>
+      <textarea rows="4" placeholder="Describa las actividades realizadas..."></textarea>
+
+      <label>Motivo o justificación:</label>
+      <textarea rows="3" placeholder="Explique el motivo de la solicitud..."></textarea>
+
+      <div class="botones">
+        <button onclick="window.print()">🖨️ Imprimir Solicitud</button>
+      </div>
+
+      <p style="margin-top:40px;text-align:center;">
+        ___________________________________________<br>
+        <strong>Elabora / Solicita</strong><br>
+        (Nombre y firma del trabajador)
+      </p>
+    </div>
+
+    <!-- FORMULARIO DE APROBACIÓN -->
+    <div id="formAprobacion" class="formulario">
+      <h3>Aprobación de Solicitud - Jefe de Departamento</h3>
+
+      <label>Nombre del jefe:</label>
+      <input type="text" placeholder="Ingresa nombre completo del jefe de departamento">
+
+      <label>Área responsable:</label>
+      <input type="text" placeholder="Ejemplo: Control de Gestión y Seguimiento">
+
+      <label>Fecha de aprobación:</label>
+      <input type="date">
+
+      <label>Tipo de solicitud revisada:</label>
+      <select>
+        <option>Tiempo Extra</option>
+        <option>Viáticos</option>
+      </select>
+
+      <label>Observaciones o comentarios:</label>
+      <textarea rows="4" placeholder="Motivo de aprobación, comentarios o rechazo..."></textarea>
+
+      <div class="botones">
+        <button onclick="window.print()">🖨️ Imprimir Aprobación</button>
+      </div>
+
+      <p style="margin-top:40px;text-align:center;">
+        ___________________________________________<br>
+        <strong>Aprobado por:</strong><br>
+        (Nombre y firma del jefe de departamento)
+      </p>
+    </div>
+  </main>
+
+  <script src="/frontend/Scripts/navegador.js"></script>
+</body>
+</html>
