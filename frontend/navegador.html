@@ -1,142 +1,309 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CFE Bitácora Técnica Digital</title>
-  <link rel="stylesheet" href="/frontend/Styles/navegador.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema CFE - Bitácora Técnica Digital</title>
+
+<style>
+:root {
+  --cfe-verde: #006847;
+  --cfe-verde-oscuro: #004c36;
+}
+
+body {
+  margin: 22;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: oklch(93.763% 0.01242 157.441);
+}
+
+/* ===== LOGIN ===== */
+#login {
+  background: url('https://cbpark.com.mx/wp-content/uploads/2022/10/Comision_Federal_de_Electricidad_logo_.svg.png') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#login-card {
+  background-color: hwb(100 100% 0% / 0.949);
+  color: hsl(0, 0%, 0%);
+  padding: 40px;
+  border-radius: 16px;
+  width: 350px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+#login-card img { width: 80px; margin-bottom: 10px; }
+#login-card h2 { margin: 8px 0; }
+#login-card h3 { font-weight: 400; font-size: 16px; margin-bottom: 25px; }
+#login-card input, #login-card select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0 15px;
+  border: none;
+  border-radius: 6px;
+}
+#login-card button {
+  background: hsl(90, 100%, 99%);
+  color: var(--cfe-verde);
+  font-weight: bold;
+  border: none;
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+#login-card button:hover { background: lch(92.7% 1.76 163.77); }
+
+/* ===== SISTEMA ===== */
+#sistema { display: none; }
+
+/* NAVBAR */
+nav {
+  background-color: var(--cfe-verde);
+  color: hwb(109 8% 60%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60p% 30px;
+}
+nav h1 { font-size: 20px; }
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+nav ul li a:hover, nav ul li a.active {
+  background-color: var(--cfe-verde-oscuro);
+}
+
+/* CONTENIDO */
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  padding: 30px;
+}
+section { display: none; }
+section.active { display: block; animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+
+/* TABLAS Y FORMULARIOS */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+th {
+  background-color: var(--cfe-verde);
+  color: white;
+}
+input, textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.btn {
+  background-color: var(--cfe-verde);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.btn:hover { background-color: var(--cfe-verde-oscuro); }
+
+/* PREVISUALIZACIÓN DE IMÁGENES  agregrale num y  letras  */
+.img-preview {
+  margin-top: 10px;
+  width: 200px;
+  height: auto;
+  display: none;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+#SistemaH1{
+  color: #ccc;
+}
+
+/* IMPRESIÓN */
+@media print {
+  nav, .btn, #imagenUpload { display: none; }
+  body { background: white; }
+  .container { box-shadow: none; margin: 0; padding: 0; }
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <h1>CFE</h1>
+
+<!-- LOGIN -->
+<div id="login">
+  <div id="login-card">
+    <img src="https://tse2.mm.bing.net/th/id/OIP.wkS6s5f27b4BA8OPE8ifGwHaCs?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3" alt="CFE">
     <h2>Bitácora Técnica Digital</h2>
-    <p><strong>Zona Istmo</strong></p>
-  </header>
+    <h3>CFE Zona Istmo</h3>
 
+    <input type="text" id="RPA" placeholder="RPA" required>
+    <input type="password" id="contrasena" placeholder="Contraseña" required>
+    <select id="categoria">
+      <option value="">Seleccionar categoría</option>
+      <option>Jefe de oficina</option><option>Jefe de departamento</option>
+      <option>Superintendente</option><option>Supervisor</option>
+      <option>Cabo liniero</option><option>Liniero</option>
+      <option>Ayudante liniero</option><option>Técnico</option>
+      <option>Electricista</option><option>Ayudante de electricista</option>
+      <option>Profesionista de comunicaciones</option>
+      <option>Técnico de comunicaciones</option>
+      <option>Técnico de control</option><option>Administrativo</option>
+    </select>
+
+    <button onclick="iniciarSesion()">Iniciar sesión</button>
+  </div>
+</div>
+
+<!-- SISTEMA PRINCIPAL -->
+<div id="sistema">
   <nav>
-    <!-- USUARIOS -->
-    <div class="dropdown">
-      <button>👥 USUARIOS ⬇</button>
-      <div class="dropdown-content">
-        <a href="#" onclick="mostrar('formSolicitud')">🧾 Solicitud (Trabajador)</a>
-        <a href="#" onclick="mostrar('formAprobacion')">✅ Aprobación (Jefe de Departamento)</a>
-      </div>
-    </div>
-
-    <!-- FORMULARIOS -->
-    <div class="dropdown">
-      <button>📋 FORMULARIOS ⬇</button>
-      <div class="dropdown-content">
-        <a href="#" onclick="mostrar('formSolicitud')">⏱️ Tiempo Extra</a>
-        <a href="#" onclick="mostrar('formAprobacion')">💼 Viáticos</a>
-      </div>
-    </div>
-
-    <!-- CATEGORÍAS -->
-    <div class="dropdown">
-      <button>🏷️ CATEGORÍAS ⬇</button>
-      <div class="dropdown-content">
-        <span class="grupo">Personal Directivo (Jefes)</span>
-        <a href="#" onclick="mostrar('formAprobacion')">Jefe de oficina</a>
-        <a href="#" onclick="mostrar('formAprobacion')">Jefe de departamento</a>
-        <a href="#" onclick="mostrar('formAprobacion')">Superintendente</a>
-
-        <span class="grupo">Personal Técnico y Operativo (Solicitantes)</span>
-        <a href="#" onclick="mostrar('formSolicitud')">Supervisor</a>
-        <a href="#" onclick="mostrar('formSolicitud')">Cabo liniero</a>
-        <a href="#" onclick="mostrar('formSolicitud')">Liniero</a>
-        <a href="#" onclick="mostrar('formSolicitud')">Ayudante liniero</a>
-        <a href="#" onclick="mostrar('formSolicitud')">Técnico</a>
-        <a href="#" onclick="mostrar('formSolicitud')">Electricista</a>
-        <a href="#" onclick="mostrar('formSolicitud')">Ayudante de electricista</a>
-
-        <span class="grupo">Comunicaciones y Control</span>
-        <a href="#" onclick="mostrar('formSolicitud')">Profesionista de comunicaciones</a>
-        <a href="#" onclick="mostrar('formSolicitud')">Técnico de comunicaciones</a>
-        <a href="#" onclick="mostrar('formSolicitud')">Técnico de control</a>
-
-        <span class="grupo">Administrativo</span>
-        <a href="#" onclick="mostrar('formSolicitud')">Administrativo</a>
-      </div>
-    </div>
-
-    <button onclick="window.print()">🖨️ IMPRIMIR REPORTE</button>
+    <h1 id = "SistemaH1">🔌Sistema CFE</h1>
+    <ul>
+      <li><a href="#" class="active" onclick="mostrar('usuarios')">Usuarios</a></li>
+      <li><a href="#" onclick="mostrar('formulario')">Formulario</a></li>
+      <li><a href="#" onclick="mostrar('imprimir')">Imprimir</a></li>
+      <li><a href="#" onclick="salir()">Salir</a></li>
+    </ul>
   </nav>
 
-  <main>
-    <!-- FORMULARIO DE SOLICITUD -->
-    <div id="formSolicitud" class="formulario">
-      <h3>Solicitud de Tiempo Extra o Viáticos</h3>
+  <div class="container">
+    <!-- SECCIÓN USUARIOS -->
+    <section id="usuarios" class="active">
+      <h2>Gestión de Usuarios</h2>
+      <table>
+        <tr><th>ID</th><th>Nombre</th><th>Departamento</th></tr>
+        <tr><td>001</td><td>Yair Ortiz</td><td>Control de Gestión</td></tr>
+        <tr><td>002</td><td>Jorge Lastra</td><td>Superintendencia</td></tr>
+      </table>
+    </section>
 
-      <label>Nombre del trabajador:</label>
-      <input type="text" placeholder="Ingresa tu nombre completo">
+    <!-- SECCIÓN FORMULARIO -->
+    <section id="formulario">
+      <h2>Crear Formato con Imagen</h2>
+      <form id="solicitudForm">
+        <label>Empleado:</label>
+        <input type="text" id="empleado" placeholder="Nombre completo" required>
+        <label>Departamento:</label>
+        <input type="text" id="departamento" placeholder="Ej. Control de Gestión" required>
+        <label>Periodo:</label>
+        <input type="text" id="periodo" placeholder="Ej. 01 al 04 de abril 2025" required>
+        <label>Motivo:</label>
+        <textarea id="motivo" rows="3" placeholder="Describe el motivo" required></textarea>
 
-      <label>Categoría:</label>
-      <input type="text" placeholder="Ejemplo: Liniero, Técnico, Administrativo...">
+        <label>Subir imagen (logo, firma o evidencia):</label>
+        <input type="file" id="imagenUpload" accept="image/*" onchange="mostrarImagen(event)">
+        <img id="imgPreview" class="img-preview">
 
-      <label>Departamento / Zona:</label>
-      <input type="text" placeholder="Ejemplo: Zona Istmo">
+        <button type="button" class="btn" onclick="generarFormato()">Generar Formato</button>
+      </form>
+    </section>
 
-      <label>Periodo trabajado:</label>
-      <input type="text" placeholder="Del 01 al 04 de abril 2025">
-
-      <label>Tipo de solicitud:</label>
-      <select>
-        <option>Tiempo Extra</option>
-        <option>Viáticos</option>
-      </select>
-
-      <label>Descripción de actividades:</label>
-      <textarea rows="4" placeholder="Describa las actividades realizadas..."></textarea>
-
-      <label>Motivo o justificación:</label>
-      <textarea rows="3" placeholder="Explique el motivo de la solicitud..."></textarea>
-
-      <div class="botones">
-        <button onclick="window.print()">🖨️ Imprimir Solicitud</button>
+    <!-- SECCIÓN IMPRIMIR -->
+    <section id="imprimir">
+      <h2>Formato Institucional CFE</h2>
+      <div id="contenidoFormato">
+        <p>Genera un formato desde el formulario para visualizarlo aquí.</p>
       </div>
+      <button class="btn" onclick="window.print()">🖨️ Imprimir Formato</button>
+    </section>
+  </div>
+</div>
 
-      <p style="margin-top:40px;text-align:center;">
-        ___________________________________________<br>
-        <strong>Elabora / Solicita</strong><br>
-        (Nombre y firma del trabajador)
-      </p>
-    </div>
+<script>
+let imagenBase64 = "";
 
-    <!-- FORMULARIO DE APROBACIÓN -->
-    <div id="formAprobacion" class="formulario">
-      <h3>Aprobación de Solicitud - Jefe de Departamento</h3>
+function iniciarSesion() {
+  const RPA = document.getElementById("RPA").value.trim();
+  const contra = document.getElementById("contrasena").value.trim();
+  const categoria = document.getElementById("categoria").value;
+  if (RPA && contra && categoria) {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("sistema").style.display = "block";
+  } else {
+    alert("Completa todos los campos para iniciar sesión.");
+  }
+}
 
-      <label>Nombre del jefe:</label>
-      <input type="text" placeholder="Ingresa nombre completo del jefe de departamento">
+function mostrar(id) {
+  document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.querySelectorAll("nav a").forEach(a => a.classList.remove("active"));
+  event.target.classList.add("active");
+}
 
-      <label>Área responsable:</label>
-      <input type="text" placeholder="Ejemplo: Control de Gestión y Seguimiento">
+function mostrarImagen(event) {
+  const archivo = event.target.files[0];
+  if (archivo) {
+    const lector = new FileReader();
+    lector.onload = function(e) {
+      document.getElementById("imgPreview").src = e.target.result;
+      document.getElementById("imgPreview").style.display = "block";
+      imagenBase64 = e.target.result;
+    };
+    lector.readAsDataURL(archivo);
+  }
+}
 
-      <label>Fecha de aprobación:</label>
-      <input type="date">
+function generarFormato() {
+  const empleado = document.getElementById('empleado').value;
+  const depto = document.getElementById('departamento').value;
+  const periodo = document.getElementById('periodo').value;
+  const motivo = document.getElementById('motivo').value;
+  const imgHTML = imagenBase64 ? `<img src="${imagenBase64}" style="max-width:200px; margin-top:10px;">` : '';
 
-      <label>Tipo de solicitud revisada:</label>
-      <select>
-        <option>Tiempo Extra</option>
-        <option>Viáticos</option>
-      </select>
+  const html = `
+  <h3>Solicitud de Tiempo Extra / Viáticos</h3>
+  <table>
+    <tr><th>Empleado</th><th>Departamento</th><th>Periodo</th><th>Motivo</th></tr>
+    <tr><td>${empleado}</td><td>${depto}</td><td>${periodo}</td><td>${motivo}</td></tr>
+  </table>
+  ${imgHTML}
+  <h3 style="margin-top:40px;">Cédula de Costos</h3>
+  <table>
+    <tr><th>Concepto</th><th>Monto ($)</th><th>Observaciones</th></tr>
+    <tr><td>Viáticos</td><td>12,500.00</td><td>Gastos de traslado</td></tr>
+    <tr><td>Combustible</td><td>4,800.00</td><td>Uso de vehículo</td></tr>
+    <tr><td><strong>Total</strong></td><td><strong>17,300.00</strong></td><td></td></tr>
+  </table>
+  `;
+  document.getElementById("contenidoFormato").innerHTML = html;
+  mostrar("imprimir");
+}
 
-      <label>Observaciones o comentarios:</label>
-      <textarea rows="4" placeholder="Motivo de aprobación, comentarios o rechazo..."></textarea>
+function salir() {
+  if (confirm("¿Deseas salir del sistema?")) location.reload();
+}
+</script>
 
-      <div class="botones">
-        <button onclick="window.print()">🖨️ Imprimir Aprobación</button>
-      </div>
-
-      <p style="margin-top:40px;text-align:center;">
-        ___________________________________________<br>
-        <strong>Aprobado por:</strong><br>
-        (Nombre y firma del jefe de departamento)
-      </p>
-    </div>
-  </main>
-
-  <script src="/frontend/Scripts/navegador.js"></script>
 </body>
 </html>
