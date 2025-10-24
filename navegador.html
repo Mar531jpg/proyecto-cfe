@@ -166,7 +166,7 @@ input, textarea {
     <h2>Bitácora Técnica Digital</h2>
     <h3>CFE Zona Istmo</h3>
 
-    <input type="text" id="RPA" placeholder="RPA" required>
+    <input type="text" id="RPE" placeholder="RPE" required>
     <input type="password" id="contrasena" placeholder="Contraseña" required>
     <select id="categoria">
       <option value="">Seleccionar categoría</option>
@@ -243,10 +243,10 @@ input, textarea {
 let imagenBase64 = "";
 
 function iniciarSesion() {
-  const RPA = document.getElementById("RPA").value.trim();
+  const RPE = document.getElementById("RPE").value.trim();
   const contra = document.getElementById("contrasena").value.trim();
   const categoria = document.getElementById("categoria").value;
-  if (RPA && contra && categoria) {
+  if (RPE && contra && categoria) {
     document.getElementById("login").style.display = "none";
     document.getElementById("sistema").style.display = "block";
   } else {
