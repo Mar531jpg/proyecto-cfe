@@ -1,5 +1,21 @@
 $(document).ready(function() {
 
+
+    $('#toggleContrasena').on('click', function() {
+        const input = $('#contrasena');
+        const icono = $('#toggleContrasena');
+        
+        if (input.attr('type') === 'password') {
+            input.attr('type', 'text');
+            icono.attr('src', 'Images/Ver.png');
+            icono.attr('alt', 'Ocultar contraseña');
+        } else {
+            input.attr('type', 'password');
+            icono.attr('src', 'Images/NoVer.png');
+            icono.attr('alt', 'Mostrar contraseña');
+        }
+    });
+    
     $('#loginForm').on('submit', function(e) {
         e.preventDefault();
 

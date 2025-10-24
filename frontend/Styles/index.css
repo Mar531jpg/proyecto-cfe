@@ -129,3 +129,27 @@ body::before {
   text-decoration: underline;
 }
 
+.input-contrasena {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-contrasena input {
+  width: 100%;
+  padding-right: 40px; 
+}
+
+.input-contrasena img {
+  position: absolute;
+  right: 10px;
+  margin: 0;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.input-contrasena img:hover {
+  opacity: 1;
+}
