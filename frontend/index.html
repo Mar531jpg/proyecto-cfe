@@ -3,29 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CFE - Bitácora Técnica Digital</title>
+  <title>Sistema CFE - Bitácora Técnica Digital</title>
   <link rel="stylesheet" href="Styles/index.css"/>
 </head>
 <body>
-  <div class="contenedor-login" id="loginDiv">
-    <img src="Images/CFE Logo Blanco.png" alt="Logo de CFE">
-    <h2>Bitácora Técnica Digital</h2>
-    <h3>CFE Zona Istmo</h3>
+  <div id="login">
+    <div id="login-card">
+      <img id="ImagenEncabezado" src="https://tse2.mm.bing.net/th/id/OIP.wkS6s5f27b4BA8OPE8ifGwHaCs?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Logo de CFE">
+      <h2>Bitácora Técnica Digital</h2>
+      <h3>CFE Zona Istmo</h3>
 
-    <div class="contenedor-form">
-      <form id="loginForm" method="POST" action="login.php">
-        <label for="usuario">RPA</label>
-        <input type="text" id="usuario" name="usuario" placeholder="Ingresa tu usuario" required>
+      <form id="loginForm" method="POST" action="../backend/login.php">
+        <label for="RPE">RPE</label>
+        <input type="text" id="RPE" name="rpe" placeholder="Ingresa tu RPE" required>
 
         <label for="contrasena">Contraseña</label>
         <div class="input-contrasena">
           <input type="password" id="contrasena" name="contrasena" placeholder="Ingresa tu contraseña" required>
-           <img src="Images/NoVer.png" id="toggleContrasena" alt="Mostrar contraseña">
+          <img src="Images/NoVer.png" id="toggleContrasena" alt="Mostrar contraseña">
         </div>
 
         <button type="submit" id="btnIniciarSesion">Iniciar sesión</button>
       </form>
-      <p>¿No tienes cuenta? <a href="#">Registrarse</a></p>
     </div>
   </div>
 

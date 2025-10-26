@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-
     $('#toggleContrasena').on('click', function() {
         const input = $('#contrasena');
         const icono = $('#toggleContrasena');
@@ -15,14 +14,14 @@ $(document).ready(function() {
             icono.attr('alt', 'Mostrar contraseña');
         }
     });
-    
+
     $('#loginForm').on('submit', function(e) {
         e.preventDefault();
 
-        let rpa = $('#usuario').val().trim();
+        let rpe = $('#RPE').val().trim();
         let password = $('#contrasena').val().trim();
 
-        if(rpa === '' || password === ''){
+        if(rpe === '' || password === ''){
             alert('Por favor rellena todos los datos.');
             return;
         }
@@ -31,11 +30,15 @@ $(document).ready(function() {
             url: '../backend/login.php',
             type: 'POST',
             dataType: 'json',
-            data: { rpa: rpa, password: password },
+            data: { rpe: rpe, password: password },
             success: function(response) {
                 if(response.Result == 1){
+                    
+                    sessionStorage.setItem('usuario', JSON.stringify(response.Datos));
+ 
                     window.location.href = "menu.html";
-                } else {
+                }
+                else {
                     alert(response.Message);
                 }
             },

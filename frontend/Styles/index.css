@@ -1,134 +1,94 @@
 :root {
-  --cfe: #0f5f3c; 
-  --cfe-dark: #0A3E27;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-html, body {
-  height: 100%;
+  --cfe-verde: #006847;
+  --cfe-verde-oscuro: #004c36;
 }
 
 body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: oklch(93.763% 0.01242 157.441);
+}
+
+/* ===== LOGIN ===== */
+#login {
+  /* background: url('https://cbpark.com.mx/wp-content/uploads/2022/10/Comision_Federal_de_Electricidad_logo_.svg.png') no-repeat center center fixed; */
+  background-size: cover;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: url("../Images/CFE Logo.png") no-repeat center center fixed;
-  background-size: 'cover';
-  position: relative;
 }
 
-body::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(10px);
-  z-index: 0;
-}
-
-/* Contenedor login */
-.contenedor-login {
-  width: 400px;
-  background-color: var(--cfe);
-  color: white;
+#login-card {
+  background-color: rgba(255, 255, 255, 0.94);
+  color: black;
   padding: 40px;
-  border-radius: 12px;
-  box-shadow: 10px 10px 20px rgba(0,0,0,0.5);
+  border-radius: 16px;
+  width: 380px;
   text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
   position: relative;
   z-index: 1;
 }
 
-.contenedor-login img {
-  max-width: 150px;
-  height: auto;
+#ImagenEncabezado{
+  width: 90px;
+  margin-bottom: 10px;
+}
+
+#login-card h2 {
+  margin: 8px 0;
+}
+
+#login-card h3 {
+  font-weight: 400;
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+
+#login-card label {
   display: block;
-  margin: 0 auto 20px;
-  border-radius: 8px;
-}
-
-.contenedor-login h2 {
-  margin-bottom: 15px;
-}
-
-.contenedor-login h3 {
-  margin-bottom: 20px;
-  font-size: 16px;
-}
-
-/* Formulario login */
-.contenedor-form {
-  background-color: white;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 10px 10px 20px rgba(0,0,0,0.2);
-  color: var(--cfe);
-}
-
-.contenedor-form form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.contenedor-form label {
   font-weight: bold;
-  font-size: 16px;
-  text-align: center;
+  text-align: left;
+  margin-top: 10px;
+  font-size: 15px;
 }
 
-.contenedor-form input {
+#login-card input {
   width: 100%;
   padding: 12px;
-  border: 2px solid gray;
-  border-radius: 10px;
+  margin: 6px 0 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
   background-color: #f8f9f9;
+  transition: border-color 0.3s;
 }
 
-.contenedor-form input:focus {
-  border-color: var(--cfe);
+#login-card input:focus {
+  border-color: var(--cfe-verde);
   outline: none;
-  box-shadow: 0 0 5px rgba(15,95,60,0.5);
+  box-shadow: 0 0 5px rgba(0,104,71,0.4);
 }
 
-.contenedor-form button {
+/* Botón */
+#login-card button {
+  background: var(--cfe-verde);
+  color: white;
+  font-weight: bold;
+  border: none;
   width: 100%;
   padding: 12px;
-  background-color: var(--cfe);
-  color: white;
-  border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
   transition: background-color 0.3s;
+  margin-top: 5px;
 }
 
-.contenedor-form button:hover {
-  background-color: var(--cfe-dark);
+#login-card button:hover {
+  background-color: var(--cfe-verde-oscuro);
 }
 
-.contenedor-form p {
-  margin-top: 15px;
-  font-size: 14px;
-}
-
-.contenedor-form a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.contenedor-form a:hover {
-  text-decoration: underline;
-}
-
+/* Ojito contraseña */
 .input-contrasena {
   position: relative;
   display: flex;
@@ -137,13 +97,12 @@ body::before {
 
 .input-contrasena input {
   width: 100%;
-  padding-right: 40px; 
+  padding-right: 40px;
 }
 
 .input-contrasena img {
   position: absolute;
   right: 10px;
-  margin: 0;
   width: 24px;
   height: 24px;
   cursor: pointer;
@@ -152,4 +111,18 @@ body::before {
 
 .input-contrasena img:hover {
   opacity: 1;
+}
+
+#login-card p {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+#login-card a {
+  color: var(--cfe-verde);
+  text-decoration: none;
+}
+
+#login-card a:hover {
+  text-decoration: underline;
 }

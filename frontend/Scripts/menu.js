@@ -1,36 +1,30 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
-  $('#formTiempoExtra').on('submit', function (e) {
-    e.preventDefault();
+    // Traer datos del usuario desde sessionStorage
+    let datosUsuario = JSON.parse(sessionStorage.getItem('usuario'));
 
-    const datos = {
-      trabajador: $('#trabajador').val().trim(),
-      horas: parseInt($('#horas').val() || "0"),
-      fecha: $('#fecha').val()
-    };
+    if(!datosUsuario){
+        // Si no hay datos, regresar al login
+        alert("Debes iniciar sesión primero");
+        window.location.href = "index.html";
+        return;
+    }
 
-    fetch("../backend/generar_pdf.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(datos)
-    })
-      .then(res => res.blob())
-      .then(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "FormatoCFE.pdf";
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
-      })
-      .catch(() => alert("No se pudo generar el PDF"));
+    // Rellenar el formulario
+    $('#empleado').val(`${datosUsuario.Nombre} ${datosUsuario.ApellidoPaterno} ${datosUsuario.ApellidoMaterno}`);
+    $('#puesto').val(datosUsuario.Puesto);
+    
+    // Fecha máxima
+    let hoy = new Date().toISOString().split('T')[0];
+    $('#fecha').attr('max', hoy);
 
-  });
+    // Función para cambiar secciones
+    window.mostrar = function(id) {
+        $('section').removeClass('active');
+        $('#' + id).addClass('active');
 
-  $('#btnRegresar').on('click', function () {
-    window.location.href = "index.html";
-  });
+        $('nav a').removeClass('active');
+        event.target.classList.add('active');
+    }
 
 });
