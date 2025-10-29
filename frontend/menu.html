@@ -28,11 +28,77 @@
         <label>Puesto:</label>
         <input type="text" id="puesto" placeholder="Ej. Control de Gestión" required readonly>
 
-        <label>Fecha:</label>
-        <input type="date" id="fecha" required max="">
-
         <label>Motivo:</label>
-        <textarea id="motivo" rows="3" placeholder="Describe el motivo" required></textarea>
+        <select id="motivo" required>
+            <option value="">Selecciona un motivo</option>
+        </select>
+
+        <section id="comidasSeccion" style="display:none;">
+          <h2>Registro de alimentos</h2>
+          
+          <div class="form-row" style="display:flex; gap:10px; margin-bottom:10px;">
+            <div style="flex:1;">
+              <label for="precioDesayuno">Desayuno ($):</label>
+              <input type="number" id="precioDesayuno" disabled placeholder="0.00" min="0" step="0.01">
+            </div>
+            <div style="flex:1;">
+              <label for="precioComida">Comida ($):</label>
+              <input type="number" id="precioComida" disabled placeholder="0.00" min="0" step="0.01">
+            </div>
+            <div style="flex:1;">
+              <label for="precioCena">Cena ($):</label>
+              <input type="number" id="precioCena" disabled placeholder="0.00" min="0" step="0.01">
+            </div>
+          </div>
+
+          <div style="margin-bottom:10px;">
+            <label for="descripcionActividades">Actividades extraordinarias realizadas:</label>
+            <textarea id="descripcionActividades" disabled placeholder="Describe las actividades..." rows="3" style="width:100%;"></textarea>
+          </div>
+
+          <div class="form-row" style="display:flex; gap:10px; margin-bottom:10px;">
+            <div style="flex:1;">
+              <label for="fechaInicio">Fecha inicio:</label>
+              <input type="date" id="fechaInicio" disabled>
+            </div>
+            <div style="flex:1;">
+              <label for="fechaFin">Fecha fin:</label>
+              <input type="date" id="fechaFin" disabled>
+            </div>
+          </div>
+
+          <div class="form-row" style="display:flex; gap:10px; margin-bottom:10px;">
+            <div style="flex:1;">
+              <label for="horaInicio">Hora inicio:</label>
+              <input type="time" id="horaInicio" disabled>
+            </div>
+            <div style="flex:1;">
+              <label for="horaFin">Hora fin:</label>
+              <input type="time" id="horaFin" disabled>
+            </div>
+          </div>
+        </section>
+
+
+        <button type="button" id="btnAgregarComida" class="btn" style="margin-bottom:10px;">Agregar Registro</button>
+
+        <table id="tablaPreview" style="width:100%; border-collapse: collapse; display:none; margin-top:10px;">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Horario</th>
+              <th>Desayuno ($)</th>
+              <th>Comida ($)</th>
+              <th>Cena ($)</th>
+              <th>Actividades</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+            
+
 
         <button type="button" class="btn" id="btnGenerar">Generar Formato</button>
       </form>

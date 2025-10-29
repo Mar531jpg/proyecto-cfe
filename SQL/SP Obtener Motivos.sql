@@ -16,7 +16,7 @@ DELIMITER ;
 
 /*
 INSERT INTO Motivos_Extra(Nombre)
-VALUES('Tiempo extra.'),('Viáticos')
+VALUES('Tiempo extra'),('Viáticos')
 
 */
 

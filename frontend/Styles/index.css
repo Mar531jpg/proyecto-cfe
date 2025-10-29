@@ -17,6 +17,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  background-image: url('../Images/FondoIndex.jpg');
+  background-size: cover;    
+  background-position: center;
+  background-repeat: no-repeat; 
 }
 
 #login-card {
@@ -29,6 +34,21 @@ body {
   box-shadow: 0 5px 20px rgba(0,0,0,0.4);
   position: relative;
   z-index: 1;
+
+  /* Animación */
+  animation: slideDown 1s ease-out forwards;
+  opacity: 0; /* Inicia invisible */
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100px); 
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);     
+    opacity: 1;
+  }
 }
 
 #ImagenEncabezado{
@@ -70,7 +90,6 @@ body {
   box-shadow: 0 0 5px rgba(0,104,71,0.4);
 }
 
-/* Botón */
 #login-card button {
   background: var(--cfe-verde);
   color: white;

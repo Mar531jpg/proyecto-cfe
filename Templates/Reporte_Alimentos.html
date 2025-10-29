@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reporte de Alimentos - CFE</title>
+<link rel="stylesheet" href="../frontend/Styles/Reporte_Alimentos.css">
+</head>
+<body>
+  <div class="pdf-page">
+    <div class="encabezado">
+      <img src="../frontend/Images/CabeceroCFE.png" alt="Logo CFE">
+      <div>
+        <h2 >COMISIÓN FEDERAL DE ELECTRICIDAD</h2>
+        <h3 >GERENCIA REGIONAL DE TRANSMISIÓN SURESTE<br>ZONA DE TRANSMISIÓN ISTMO</h3>
+      </div>
+    </div>
+
+    <p style="text-align:right;">CD. JUCHITÁN DE ZARAGOZA, OAX., A <span id="fechaActual"></span></p>
+
+
+    <table class="tabla-datos" >
+      <tr>
+        <td class="label" colspan="2" rowspan="2" style="text-align:center; vertical-align:middle;">
+          SÍRVASE LIQUIDAR A:
+        </td>
+
+        <td class="label" style="text-align:center;">R.P.E. y/o <br/></vr>R.T.T.</td>
+        <td class="label" style="text-align:center;">NOMBRE</td>
+      </tr>
+
+      <tr>
+        <td id="rpeEmpleado" style="text-align:center;"></td>
+        <td style="text-align:center;"><span class="nombreEmpleado"></span></td>
+      </tr>
+      <tr>
+
+        <td colspan="5"><br/><br/></td>
+
+      </tr>
+      <tr>
+        <td style="text-align:center;"><strong>CATEGORÍA:</strong></td>
+        <td class="puestoEmpleado"  colspan="3"></td>
+
+      </tr>
+    </table>
+
+    <br/>
+    <h3 style="margin-top:10px;">REPORTE DE ALIMENTOS DEL PERSONAL DE CONFIANZA</h3>
+
+    <table class="tabla-conceptos">
+      <thead>
+        <tr>
+          <th>FECHA</th>
+          <th>HORARIO</th>
+          <th>DESAYUNO</th>
+          <th>COMIDA</th>
+          <th>CENA</th>
+          <th>ACTIVIDADES EXTRAORDINARIAS REALIZADAS</th>
+        </tr>
+      </thead>
+      <tbody id="tablaConceptosBody"> 
+      </tbody>
+    </table>
+
+    <br/>
+     <table class="tabla-datos" >
+      <tr>
+        <td style="text-align:center;">
+          <span>TOTAL:</span>
+        </td>
+        <td style="text-align:center;">
+          $<span  id="totalGeneral">0.00</span>
+        </td>
+        <td>
+          <span id="totalLetras"></span>
+        </td>
+      </tr>
+    </table>
+
+    <table class="firmas">
+      <tr>
+        <td class="label"></td>
+        <td class="label">VoBo:</td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td class="firma-espacio" id="firmaAutoriza"><p class="firma-linea"></p></td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td>
+          <span class="EncargadoAutorizar"></span><br>
+          <span class="puestoEncargadoAutorizar"></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="label label-small">SOLICITA:</td>
+        <td class="label label-small">AUTORIZA:</td>
+      </tr>
+
+      <tr>
+        <td class="firma-espacio" id="firmaSolicita"><p class="firma-linea"></p></td>
+        <td class="firma-espacio" id="firmaAutoriza"><p class="firma-linea"></p></td>
+      </tr>
+
+      <tr>
+        <td>
+          <span class="nombreEmpleado"></span><br>
+          <span class="puestoEmpleado"></span>
+        </td>
+
+        <td>
+          <span class="EncargadoAutorizar"></span><br>
+          <span class="puestoEncargadoAutorizar"></span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <script src="../frontend/Scripts/jquery-3.7.1.min.js"></script>
+  <script src="../frontend/Scripts/Reporte_Alimentos.js"></script>
+</body>
+</html>

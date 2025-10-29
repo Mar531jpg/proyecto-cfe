@@ -1,0 +1,117 @@
+@page {
+    size: letter portrait;
+    margin: 1.5cm;
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #000;
+    background: #fff;
+  }
+
+  .pdf-page {
+    width: 8.5in;
+    height: 11in;
+    margin: 0 auto;
+    padding: 1cm;
+    border: 1px solid #000;
+    box-sizing: border-box;
+  }
+
+.encabezado {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.encabezado img {
+  height: 50px;
+  margin-right: 15px;
+}
+
+.encabezado h2 {
+  font-size: 20px;  
+  font-weight: bold;  
+  margin: 0 0 4px 0; 
+}
+
+.encabezado h3 {
+  font-size: 14px;  
+  font-weight: normal; 
+  margin: 0; 
+}
+
+
+  h2, h3 {
+    text-align: center;
+    margin: 4px 0;
+  }
+
+  .tabla-datos, .tabla-conceptos {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 6px;
+  }
+
+  .tabla-datos td, .tabla-conceptos td, .tabla-conceptos th {
+    border: 1px solid #000;
+    padding: 4px 6px;
+    vertical-align: middle;
+  }
+
+  .tabla-datos td.label {
+    font-weight: bold;
+    background-color: #f4f4f4;
+  }
+
+  .tabla-conceptos th {
+    background-color: #ddd;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  /*FIRMAAS*/
+
+  .firmas {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 25px;
+  text-align: center;
+  font-size: 10pt;
+}
+
+.firmas td {
+  border: 1px solid #000;
+  padding: 6px;
+  vertical-align: middle;
+}
+
+.firmas .label {
+  font-weight: bold;
+  background: #f2f2f2;
+}
+
+.firmas .label-small {
+  height: 20px; 
+  font-size: 9pt;
+}
+
+.firma-espacio {
+  height: 100px; 
+}
+
+.firma-linea {
+  height: 45px;
+  position: relative;
+}
+
+.firma-linea::after {
+  content: "";
+  position: absolute;
+  bottom: -20px; 
+  left: 15%;
+  right: 15%;
+  border-bottom: 1px solid #000;
+}
