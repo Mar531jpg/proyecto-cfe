@@ -128,3 +128,52 @@ h2 {
   }
 }
 
+.tabla-conceptos {
+  width: 90%;
+  border-collapse: collapse;
+  margin: 30px auto;
+  background: var(--cfe-blanco);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 12px;
+}
+
+.tabla-conceptos thead {
+  background-color: var(--cfe-verde);
+  color: var(--cfe-blanco);
+  text-align: left;
+}
+
+.tabla-conceptos th,
+.tabla-conceptos td {
+    padding: 7px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: top;
+    text-align: center;
+    align-content: center;
+    min-width: 120px;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+.tabla-conceptos th {
+  font-weight: 600;
+}
+
+.tabla-conceptos tbody tr:hover {
+  background-color: #f1f1f1;
+  transition: 0.3s;
+}
+
+.tabla-conceptos td {
+  color: #333;
+  line-height: 1.4;
+}
+
+.tabla-conceptos td:last-child,
+.tabla-conceptos th:last-child {
+  min-width: 200px;
+}
+
+

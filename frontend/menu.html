@@ -11,12 +11,12 @@
 
 <body>
   <div id="alert-container"></div>
+
   <div id="sistema">
     <nav>
       <h1 id="SistemaH1">🔌Sistema CFE</h1>
       <ul>
         <li><a href="#" class="active" onclick="mostrar('formulario')">Formulario</a></li>
-
       </ul>
     </nav>
 
@@ -77,33 +77,35 @@
                 <input type="time" id="horaFin" disabled>
               </div>
             </div>
+
+
+
           </section>
 
-
           <button type="button" id="btnAgregarComida" class="btn" style="margin-bottom:10px;">Agregar Registro</button>
-
-          <table id="tablaPreview" style="width:100%; border-collapse: collapse; display:none; margin-top:10px;">
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Horario</th>
-                <th>Desayuno ($)</th>
-                <th>Comida ($)</th>
-                <th>Cena ($)</th>
-                <th>Actividades</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-
-
-
-
           <button type="button" class="btn" id="btnGenerar">Generar Formato</button>
         </form>
+
       </section>
     </div>
+  </div>
+
+  <!-- Vista previa de registros de alimentos -->
+  <div id="vista-previa-tabla" style="display:none;">
+    <h2>Vista previa de registros</h2>
+    <table class="tabla-conceptos">
+      <thead>
+        <tr>
+          <th>FECHA</th>
+          <th>HORARIO</th>
+          <th>DESAYUNO</th>
+          <th>COMIDA</th>
+          <th>CENA</th>
+          <th>ACTIVIDADES EXTRAORDINARIAS REALIZADAS</th>
+        </tr>
+      </thead>
+      <tbody id="tablaConceptosBody"></tbody>
+    </table>
   </div>
 
   <script src="Scripts/jquery-3.7.1.min.js"></script>
