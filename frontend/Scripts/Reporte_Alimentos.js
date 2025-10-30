@@ -1,78 +1,45 @@
-
 $(document).ready(function () {
+    const reporteData = JSON.parse(sessionStorage.getItem('reporteAlimentos'));
+    if (!reporteData) return;
 
-  const empleado = {
-    nombre: "MISAEL CUEVAS ZACARÍAS",
-    rpe: "91234",
-    puesto: "PATRÓN",
-    jefe: "ING. JORGE ALFREDO LASTRA ARIAS"
-  };
+    const empleado = reporteData.empleado;
+    const alimentos = reporteData.alimentos;
 
-  const encargadoAutorizar = {
-    nombre: "ING. JORGE ALFREDO LASTRA ARIAS",
-    puesto: "SUPERINTENDENTE ZONA TRANSMISIÓN ISTMO"
-  };
+    const encargadoAutorizar = {
+      nombre: "ING. JORGE ALFREDO LASTRA ARIAS",
+      puesto: "SUPERINTENDENTE ZONA TRANSMISIÓN ISTMO"
+    };
 
-  const alimentos = [
-    {
-      fecha: "2025-10-25",
-      horario: "07:00 - 15:00",
-      desayuno: "$80.00",
-      comida: "$120.00",
-      cena: "$0.00",
-      actividades: "Hola"
-    },
-    {
-      fecha: "2025-10-26",
-      horario: "15:00 - 23:00",
-      desayuno: "$0.00",
-      comida: "$120.00",
-      cena: "$100.00",
-      actividades: "Supervisión de pruebas eléctricas"
-    },
-    {
-      fecha: "2025-10-27",
-      horario: "08:00 - 17:00",
-      desayuno: "$80.00",
-      comida: "$120.00",
-      cena: "$0.00",
-      actividades: "Apoyo en maniobras de subestación"
-    }
-  ];
+    $(".nombreEmpleado").text(empleado.nombre);
+    $("#rpeEmpleado").text(empleado.rpe);
+    $(".puestoEmpleado").text(empleado.puesto);
+    $(".EncargadoAutorizar").text(encargadoAutorizar.nombre);
+    $(".puestoEncargadoAutorizar").text(encargadoAutorizar.puesto);
 
-  $(".nombreEmpleado").text(empleado.nombre);
-  $("#rpeEmpleado").text(empleado.rpe);
-  $(".puestoEmpleado").text(empleado.puesto);
-  $(".EncargadoAutorizar").text(encargadoAutorizar.nombre);
-  $(".puestoEncargadoAutorizar").text(encargadoAutorizar.puesto);
+    const hoy = new Date();
+    const opcionesFecha = { day: "2-digit", month: "long", year: "numeric" };
+    $("#fechaActual").text(hoy.toLocaleDateString("es-MX", opcionesFecha).toUpperCase());
 
+    let total = 0;
+    alimentos.forEach(item => {
+        const getMonto = val => parseFloat(val.replace("$", "")) || 0;
+        const totalDia = getMonto(item.desayuno) + getMonto(item.comida) + getMonto(item.cena);
+        total += totalDia;
 
-  const hoy = new Date();
-  const opcionesFecha = { day: "2-digit", month: "long", year: "numeric" };
-  $("#fechaActual").text(hoy.toLocaleDateString("es-MX", opcionesFecha).toUpperCase());
-
-  let total = 0;
-  alimentos.forEach(item => {
-    const getMonto = val => parseFloat(val.replace("$", "")) || 0;
-    const totalDia = getMonto(item.desayuno) + getMonto(item.comida) + getMonto(item.cena);
-    total += totalDia;
-
-    $("#tablaConceptosBody").append(`
-      <tr>
-        <td>${item.fecha}</td>
-        <td>${item.horario}</td>
-        <td>${item.desayuno}</td>
-        <td>${item.comida}</td>
-        <td>${item.cena}</td>
-        <td>${item.actividades}</td>
-      </tr>
-    `);
-  });
+        $("#tablaConceptosBody").append(`
+            <tr>
+                <td>${item.fecha}</td>
+                <td>${item.horario}</td>
+                <td>${item.desayuno}</td>
+                <td>${item.comida}</td>
+                <td>${item.cena}</td>
+                <td>${item.actividades}</td>
+            </tr>
+        `);
+    });
 
     $("#totalGeneral").text(total.toFixed(2));
-
     $("#totalLetras").text(numeroALetras(total));
-
 });
 
 function numeroALetras(num) {

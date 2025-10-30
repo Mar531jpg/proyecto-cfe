@@ -11,15 +11,17 @@
 .alerta {
   display: flex;
   align-items: center;
-  background-color: #fff;
+  background-color: #fefefe; 
   color: #333;
   padding: 12px 16px;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   min-width: 250px;
   opacity: 0;
   transform: translateX(100%);
   transition: all 0.4s ease;
+  font-weight: 600;
+  font-size: 14px;
 }
 
 .alerta.mostrar {
@@ -34,9 +36,23 @@
 }
 
 .alerta.error {
-  border-left: 5px solid #e74c3c;
+  background-color: #e74c3c;
+  color: #fff;
+  border-left: 5px solid #c0392b;
 }
 
 .alerta.success {
-  border-left: 5px solid #2ecc71;
+  background-color: #2ecc71; 
+  color: #fff;
+  border-left: 5px solid #27ae60;
+}
+
+.alerta.mostrar {
+  animation: slideIn 0.4s ease forwards;
+}
+
+@keyframes slideIn {
+  0% { opacity: 0; transform: translateX(100%); }
+  60% { opacity: 1; transform: translateX(-10px); }
+  100% { transform: translateX(0); }
 }

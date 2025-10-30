@@ -177,3 +177,22 @@ h2 {
 }
 
 
+
+
+.btn-eliminar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.btn-eliminar img {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s;
+}
+
+.btn-eliminar img:hover {
+  transform: scale(1.2);
+}
+

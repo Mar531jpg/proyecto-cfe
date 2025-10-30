@@ -13,13 +13,28 @@ if ($conexion->connect_error) {
     exit;
 }
 
-$storedProcedure = $conexion->prepare("CALL ObtenerMotivos()");
+$rpe = isset($_GET['rpe']) ? trim($_GET['rpe']) : '';
+
+if (empty($rpe)) {
+    echo json_encode(['Result' => 0, 'Message' => 'Parámetro "rpe" no proporcionado.']);
+    exit;
+}
+
+$storedProcedure = $conexion->prepare("CALL ObtenerMotivos(?)");
 if (!$storedProcedure) {
     echo json_encode(['Result' => 0, 'Message' => 'Error al preparar la consulta: ' . $conexion->error]);
     exit;
 }
 
-$storedProcedure->execute();
+$storedProcedure->bind_param("s", $rpe);
+
+if (!$storedProcedure->execute()) {
+    echo json_encode(['Result' => 0, 'Message' => 'Error al ejecutar la consulta: ' . $storedProcedure->error]);
+    $storedProcedure->close();
+    $conexion->close();
+    exit;
+}
+
 $resultado = $storedProcedure->get_result();
 
 $motivos = [];
