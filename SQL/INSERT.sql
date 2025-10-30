@@ -1,4 +1,4 @@
-/*
+
 INSERT INTO Puestos (Nombre)
 VALUES
 ('PROFESIONISTA'),
@@ -21,9 +21,7 @@ VALUES
 ('TECNICO DE CONTROL'),
 ('ADMINISTRATIVO');
 
-*/
 
-/*
 INSERT INTO Usuarios (Nombre, ApellidoPaterno, ApellidoMaterno, RPE, Password, Activo)
 VALUES
 ('MARIA EUGENIA', 'SANTIAGO', 'SANTIAGO', '9FMHN', '1234', 1),
@@ -77,9 +75,9 @@ VALUES
 ('JESUS', 'BENITEZ', 'MATIAS', '9N64U', '1234', 1),
 ('JESUS EFREN', 'CHAVEZ', 'VASQUEZ', '9AN1K', '1234', 1),
 ('AHUIZOTL RODOLFO', 'VICTORIA', 'GARCIA', '9AX5V', '1234', 1);
-*/
 
-/*
+
+
 INSERT INTO UsuarioPuesto (IdUsuario, IdPuesto)
 VALUES
 (1, 1),   -- MARIA EUGENIA - PROFESIONISTA
@@ -134,7 +132,7 @@ VALUES
 (50, 1),  -- JESUS EFREN - PROFESIONISTA
 (51, 1);  -- AHUIZOTL RODOLFO - PROFESIONISTA
 
-*/
+
 
 
 SELECT 
