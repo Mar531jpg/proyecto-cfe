@@ -22,7 +22,7 @@ $(document).ready(function() {
         let password = $('#contrasena').val().trim();
 
         if(rpe === '' || password === ''){
-            alert('Por favor rellena todos los datos.');
+             AlertaCustom("Por favor rellena todos los datos.", 3000, "error");
             return;
         }
 
@@ -39,11 +39,11 @@ $(document).ready(function() {
                     window.location.href = "menu.html";
                 }
                 else {
-                    alert(response.Message);
+                     AlertaCustom(response.Message, 3000, "error");
                 }
             },
             error: function(error) {
-                alert('Error en la conexión con el servidor.');
+                 AlertaCustom("Error en la conexión del servidor.", 3000, "error");
                 console.log('error ', error)
             }
         });
