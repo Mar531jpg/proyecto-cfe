@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reporte de Alimentos - CFE</title>
-<link rel="stylesheet" href="../frontend/Styles/Reporte_Alimentos.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reporte de Alimentos - CFE</title>
+  <link rel="stylesheet" href="../frontend/Styles/Reporte_Alimentos.css">
 </head>
+
 <body>
+  <button id="btnDescargarPDF"
+    style="position:fixed; top:20px; right:20px; padding:10px 15px; z-index:999; cursor:pointer;">
+    Descargar PDF
+  </button>
+
+
   <div class="pdf-page">
     <div class="encabezado">
       <img src="../frontend/Images/CabeceroCFE.png" alt="Logo CFE">
       <div>
-        <h2 >COMISIÓN FEDERAL DE ELECTRICIDAD</h2>
-        <h3 >GERENCIA REGIONAL DE TRANSMISIÓN SURESTE<br>ZONA DE TRANSMISIÓN ISTMO</h3>
+        <h2>COMISIÓN FEDERAL DE ELECTRICIDAD</h2>
+        <h3>GERENCIA REGIONAL DE TRANSMISIÓN SURESTE<br>ZONA DE TRANSMISIÓN ISTMO</h3>
       </div>
     </div>
 
     <p style="text-align:right;">CD. JUCHITÁN DE ZARAGOZA, OAX., A <span id="fechaActual"></span></p>
 
 
-    <table class="tabla-datos" >
+    <table class="tabla-datos">
       <tr>
         <td class="label" colspan="2" rowspan="2" style="text-align:center; vertical-align:middle;">
           SÍRVASE LIQUIDAR A:
         </td>
 
-        <td class="label" style="text-align:center;">R.P.E. y/o <br/></vr>R.T.T.</td>
+        <td class="label" style="text-align:center;">R.P.E. y/o <br /></vr>R.T.T.</td>
         <td class="label" style="text-align:center;">NOMBRE</td>
       </tr>
 
@@ -35,17 +43,17 @@
       </tr>
       <tr>
 
-        <td colspan="5"><br/><br/></td>
+        <td colspan="5"><br /><br /></td>
 
       </tr>
       <tr>
         <td style="text-align:center;"><strong>CATEGORÍA:</strong></td>
-        <td class="puestoEmpleado"  colspan="3"></td>
+        <td class="puestoEmpleado" colspan="3"></td>
 
       </tr>
     </table>
 
-    <br/>
+    <br />
     <h3 style="margin-top:10px;">REPORTE DE ALIMENTOS DEL PERSONAL DE CONFIANZA</h3>
 
     <table class="tabla-conceptos">
@@ -59,18 +67,18 @@
           <th>ACTIVIDADES EXTRAORDINARIAS REALIZADAS</th>
         </tr>
       </thead>
-      <tbody id="tablaConceptosBody"> 
+      <tbody id="tablaConceptosBody">
       </tbody>
     </table>
 
-    <br/>
-     <table class="tabla-datos" >
+    <br />
+    <table class="tabla-datos">
       <tr>
         <td style="text-align:center;">
           <span>TOTAL:</span>
         </td>
         <td style="text-align:center;">
-          $<span  id="totalGeneral">0.00</span>
+          $<span id="totalGeneral">0.00</span>
         </td>
         <td>
           <span id="totalLetras"></span>
@@ -86,7 +94,9 @@
 
       <tr>
         <td></td>
-        <td class="firma-espacio" id="firmaAutoriza"><p class="firma-linea"></p></td>
+        <td class="firma-espacio" id="firmaAutoriza">
+          <p class="firma-linea"></p>
+        </td>
       </tr>
 
       <tr>
@@ -103,8 +113,12 @@
       </tr>
 
       <tr>
-        <td class="firma-espacio" id="firmaSolicita"><p class="firma-linea"></p></td>
-        <td class="firma-espacio" id="firmaAutoriza"><p class="firma-linea"></p></td>
+        <td class="firma-espacio" id="firmaSolicita">
+          <p class="firma-linea"></p>
+        </td>
+        <td class="firma-espacio" id="firmaAutoriza">
+          <p class="firma-linea"></p>
+        </td>
       </tr>
 
       <tr>
@@ -121,7 +135,10 @@
     </table>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="../frontend/Scripts/jquery-3.7.1.min.js"></script>
   <script src="../frontend/Scripts/Reporte_Alimentos.js"></script>
 </body>
+
 </html>

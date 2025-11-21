@@ -40,6 +40,36 @@ $(document).ready(function () {
 
     $("#totalGeneral").text(total.toFixed(2));
     $("#totalLetras").text(numeroALetras(total));
+
+    $("#btnDescargarPDF").click(function () {
+
+        const { jsPDF } = window.jspdf;
+
+        const elemento = document.querySelector(".pdf-page");
+
+        html2canvas(elemento, { scale: 3 }).then(canvas => {
+
+            const imgData = canvas.toDataURL("image/png");
+
+            const pdf = new jsPDF({
+                orientation: "portrait",
+                unit: "mm",
+                format: "letter" 
+            });
+
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+
+            const imgWidth = pageWidth;
+            const imgHeight = canvas.height * (imgWidth / canvas.width);
+
+            pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+
+            pdf.save(`Reporte_Alimentos_${empleado.nombre}.pdf`);
+        });
+
+    });
+
 });
 
 function numeroALetras(num) {

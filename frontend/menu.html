@@ -16,8 +16,15 @@
     <nav>
       <h1 id="SistemaH1">🔌Sistema CFE</h1>
       <ul>
-        <li><a href="#" class="active" onclick="mostrar('formulario')">Formulario</a></li>
+        <li><a href="#" class="active" onclick="mostrar('formulario', event)">Formulario</a></li>
+        <li><a id="tabUsuarios" href="#" onclick="mostrar('usuarios', event)">Usuarios</a></li>
       </ul>
+
+      <div style="margin-top: 10px; text-align: center;">
+        <button id="btnCerrarSesion" class="btn btn-danger">Cerrar Sesión</button>
+    </div>
+
+
     </nav>
 
     <div class="container">
@@ -79,7 +86,8 @@
             </div>
 
 
-            <button type="button" id="btnAgregarComida" class="btn" style="margin-bottom:10px;">Agregar Registro</button>
+            <button type="button" id="btnAgregarComida" class="btn" style="margin-bottom:10px;">Agregar
+              Registro</button>
             <button type="button" class="btn" id="btnGenerar">Generar Formato</button>
 
           </section>
@@ -87,7 +95,31 @@
         </form>
 
       </section>
+
+
     </div>
+    <section id="usuarios">
+      <h2>Administración de Usuarios</h2>
+
+      <div style="text-align: center; margin-bottom: 10px;">
+        <button id="btnNuevoUsuario" class="btn">Agregar nuevo</button>
+      </div>
+
+      <table class="tabla-conceptos">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido P.</th>
+            <th>Apellido M.</th>
+            <th>RPE</th>
+            <th>Activo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tablaUsuariosBody"></tbody>
+      </table>
+    </section>
+
   </div>
 
   <!-- Vista previa de registros de alimentos -->
@@ -108,6 +140,73 @@
       <tbody id="tablaConceptosBody"></tbody>
     </table>
   </div>
+
+  <div id="modalUsuario" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h3 id="modalTitulo">Editar Usuario</h3>
+
+      <input type="hidden" id="usuarioId">
+
+      <div class="modal-row">
+        <div class="modal-col">
+          <label>Nombre:</label>
+          <input type="text" id="nombreUsuario">
+        </div>
+        <div class="modal-col">
+          <label>Apellido Paterno:</label>
+          <input type="text" id="apellidoPUsuario">
+        </div>
+      </div>
+
+      <div class="modal-row">
+        <div class="modal-col">
+          <label>Apellido Materno:</label>
+          <input type="text" id="apellidoMUsuario">
+        </div>
+        <div class="modal-col">
+          <label>RPE:</label>
+          <input type="text" id="rpeUsuario">
+        </div>
+      </div>
+
+      <div class="modal-row">
+        <div class="modal-col">
+          <label>Puesto:</label>
+          <select id="puestoUsuario">
+            <option value="">Seleccione un puesto...</option>
+          </select>
+        </div>
+        <div class="modal-col">
+          <label>Activo:</label>
+          <select id="activoUsuario">
+            <option value="1">Sí</option>
+            <option value="0">No</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-row modal-buttons">
+        <button id="btnGuardarUsuario" class="btn">Guardar</button>
+        <button id="btnCerrarModal" class="btn btn-danger">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="modalContrasena" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h3 id="modalTituloContrasena">Editar Contraseña</h3>
+      <input type="hidden" id="usuarioIdContrasena">
+
+
+      <div id="camposContrasena"></div>
+
+      <button id="btnGuardarContrasena" class="btn">Guardar</button>
+      <button id="btnCerrarModalContrasena" class="btn btn-danger">Cerrar</button>
+    </div>
+  </div>
+
+
 
   <script src="Scripts/jquery-3.7.1.min.js"></script>
   <script src="Scripts/menu.js"></script>

@@ -31,6 +31,7 @@ BEGIN
         END IF;
 
         SELECT 
+			a.Id,
 			1 AS Resultado,
 			CONCAT(
 				'Bienvenido ',
@@ -49,7 +50,8 @@ BEGIN
 			IFNULL(a.ApellidoMaterno, '') AS ApellidoMaterno,
 			IFNULL(a.RPE, '') AS RPE,
 			IFNULL(c.Nombre, '') AS Puesto,
-			IFNULL(e.Nombre, 'Usuario') AS Rol
+			IFNULL(e.Nombre, 'Usuario') AS Rol,
+            IFNULL(f.Nombre, 'Sindicalizado') AS Catalogo_Puestos
 		FROM Usuarios a
 		LEFT JOIN UsuarioPuesto b 
 			ON a.Id = b.IdUsuario
@@ -59,7 +61,10 @@ BEGIN
 			ON a.Id = d.Usuarios_Id
 		LEFT JOIN Roles e
 			ON e.Id = d.Roles_Id
-		WHERE a.RPE = pRPE;
+		LEFT JOIN Catalogo_puestos f
+			ON c.Catalogo_Puestos_Id = f.Id
+		WHERE a.RPE = pRPE
+        ORDER BY a.Id ;
 
     END login_block;
 
