@@ -74,7 +74,12 @@ $(document).ready(function () {
         GenerarVistaPreviaRegistros();
     });
 
-    $('#tablaConceptosBody').on('click', '.btn-eliminar', function () {
+    $('#btnVerVistaPrevia').on('click', function () {
+        abrirModalVistaPrevia();
+    });
+
+    
+    $(document).on('click', '#tablaModalBody .btn-eliminar', function() {
         EliminarFilaDeVistaPrevia(this);
     });
 
@@ -89,6 +94,10 @@ $(document).ready(function () {
 
     $('#btnNuevoUsuario').on('click', function () {
         AbrirModalUsuario("Nuevo");
+    });
+
+    $("#btnCerrarModalVistaPrevia").click(function() {
+        $("#modalVistaPrevia").hide();
     });
 
     $('#btnGuardarUsuario').on('click', function () {
@@ -175,52 +184,59 @@ function ActivarSecciones(motivoId) {
 
 function GenerarVistaPreviaRegistros() {
 
-    const desayuno = parseFloat($('#precioDesayuno').val()) || 0;
-    const comida = parseFloat($('#precioComida').val()) || 0;
-    const cena = parseFloat($('#precioCena').val()) || 0;
+    // Obtener checks como booleanos
+    const desayunoCheck = $('#checkDesayuno').is(':checked');
+    const comidaCheck = $('#checkComida').is(':checked');
+    const cenaCheck = $('#checkCena').is(':checked');
+
+    const primaDominical = $('#chkPrimaDominical').is(':checked');
+    const festivoTrabajado = $('#chkFestivoTrabajado').is(':checked');
+    const otroConcepto = $('#chkOtroConcepto').is(':checked');
+
     const descripcion = $('#descripcionActividades').val().trim();
     const fecha = $('#fechaRealizada').val();
     const horaInicio = $('#horaInicio').val();
     const horaFin = $('#horaFin').val();
 
+    // Validación
     if (!fecha || !horaInicio || !horaFin || descripcion === "") {
         AlertaCustom("Por favor, llena todos los campos obligatorios.", 3000, "error");
         return;
     }
 
-    if (desayuno <= 0 && comida <= 0 && cena <= 0) {
-        AlertaCustom("Debes ingresar al menos un monto en desayuno, comida o cena.", 3000, "error");
+    if (!desayunoCheck && !comidaCheck && !cenaCheck &&
+        !primaDominical && !festivoTrabajado && !otroConcepto) {
+        AlertaCustom("Debes seleccionar al menos un concepto.", 3000, "error");
         return;
     }
+
+    const desayunoMonto = desayunoCheck ? 154 : 0;
+    const comidaMonto = comidaCheck ? 301 : 0;
+    const cenaMonto = cenaCheck ? 154 : 0;
 
     const nuevoRegistro = {
         fecha,
         horario: `${horaInicio} - ${horaFin}`,
-        desayuno: `$${desayuno.toFixed(2)}`,
-        comida: `$${comida.toFixed(2)}`,
-        cena: `$${cena.toFixed(2)}`,
+
+        desayuno: `$${desayunoMonto.toFixed(2)}`,
+        comida: `$${comidaMonto.toFixed(2)}`,
+        cena: `$${cenaMonto.toFixed(2)}`,
+
+        desayunoCheck,
+        comidaCheck,
+        cenaCheck,
+
+        primaDominical,
+        festivoTrabajado,
+        otroConcepto,
+
         actividades: descripcion
     };
 
     alimentos.push(nuevoRegistro);
 
-    $('#vista-previa-tabla').show();
-
-    const fila = `
-        <tr data-index="${alimentos.length - 1}">
-            <td>${nuevoRegistro.fecha}</td>
-            <td>${nuevoRegistro.horario}</td>
-            <td>${nuevoRegistro.desayuno}</td>
-            <td>${nuevoRegistro.comida}</td>
-            <td>${nuevoRegistro.cena}</td>
-            <td>${nuevoRegistro.actividades}</td>
-            <td><button class="btn-eliminar"><img src="Images/borrar.png" alt="Eliminar"></button></td>
-        </tr>
-    `;
-    $('#tablaConceptosBody').append(fila);
-
-
-    $('#precioDesayuno, #precioComida, #precioCena').val('');
+    // Limpiar
+    $('input[type="checkbox"]').prop('checked', false);
     $('#descripcionActividades').val('');
     $('#fechaRealizada').val('');
     $('#horaInicio').val('');
@@ -229,21 +245,25 @@ function GenerarVistaPreviaRegistros() {
     AlertaCustom("Registro agregado correctamente.", 2000, "success");
 }
 
+
+
 function EliminarFilaDeVistaPrevia(boton) {
     const fila = $(boton).closest('tr');
     const index = fila.data('index');
 
+    if (index === undefined) return;
 
     alimentos.splice(index, 1);
 
     fila.remove();
 
-    $('#tablaConceptosBody tr').each(function (i) {
-        $(this).attr('data-index', i);
+    $("#tablaModalBody tr").each(function(i) {
+        $(this).attr("data-index", i);
     });
 
     if (alimentos.length === 0) {
-        $('#vista-previa-tabla').hide();
+        $("#tablaModalConceptos").hide();
+        $("#mensajeSinDatos").show();
     }
 
     AlertaCustom("Registro eliminado.", 2000, "success");
@@ -429,6 +449,40 @@ function CargarUsuarios() {
     });
 }
 
+function abrirModalVistaPrevia() {
+    if (alimentos.length === 0) {
+        $("#tablaModalConceptos").hide();
+        $("#mensajeSinDatos").show();
+    } else {
+        $("#tablaModalBody").empty();
+
+        alimentos.forEach((item, index) => {
+            const fila = `
+                <tr data-index="${index}">
+                    <td>${item.fecha}</td>
+                    <td>${item.horario}</td>
+                    <td>${item.desayunoCheck ? "✔" : "X"}</td>
+                    <td>${item.comidaCheck ? "✔" : "X"}</td>
+                    <td>${item.cenaCheck ? "✔" : "X"}</td>
+                    <td>${item.primaDominical ? "✔" : "X"}</td>
+                    <td>${item.festivoTrabajado ? "✔" : "X"}</td>
+                    <td>${item.otroConcepto ? "✔" : "X"}</td>
+                    <td>${item.actividades}</td>
+                    <td><button class="btn-eliminar"><img src="Images/borrar.png" alt="Eliminar"></button></td>
+                </tr>
+            `;
+            $("#tablaModalBody").append(fila);
+        });
+
+        $("#mensajeSinDatos").hide();
+        $("#tablaModalConceptos").show();
+    }
+
+    $("#modalVistaPrevia").show();
+}
+
+
+
 
 function AbrirModalUsuario(accion, usuario = null) {
 
@@ -467,7 +521,6 @@ function AbrirModalUsuario(accion, usuario = null) {
         $('#apellidoMUsuario').val(usuario.ApellidoMaterno);
         $('#rpeUsuario').val(usuario.RPE);
         $('#activoUsuario').val(usuario.Activo);
-        // usuario.IdPuesto debe venir desde tu consulta de usuarios
     }
     else if (accion === "Nuevo") {
         $('#usuarioId').val("");

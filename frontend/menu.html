@@ -22,7 +22,7 @@
 
       <div style="margin-top: 10px; text-align: center;">
         <button id="btnCerrarSesion" class="btn btn-danger">Cerrar Sesión</button>
-    </div>
+      </div>
 
 
     </nav>
@@ -43,54 +43,54 @@
             <option value="">Selecciona un motivo</option>
           </select>
 
-          <section id="comidasSeccion" style="display:none;">
+          <section id="comidasSeccion" class="comidas-seccion" style="display:none;">
             <h2>Registro de alimentos</h2>
 
-            <div class="form-row" style="display:flex; gap:10px; margin-bottom:10px;">
-              <div style="flex:1;">
-                <label for="precioDesayuno">Desayuno ($):</label>
-                <input type="number" id="precioDesayuno" disabled placeholder="0.00" min="0" step="0.01">
-              </div>
-              <div style="flex:1;">
-                <label for="precioComida">Comida ($):</label>
-                <input type="number" id="precioComida" disabled placeholder="0.00" min="0" step="0.01">
-              </div>
-              <div style="flex:1;">
-                <label for="precioCena">Cena ($):</label>
-                <input type="number" id="precioCena" disabled placeholder="0.00" min="0" step="0.01">
-              </div>
+            <div class="checks-grupo">
+              <label><input type="checkbox" id="checkDesayuno"> Desayuno</label>
+              <label><input type="checkbox" id="checkComida"> Comida</label>
+              <label><input type="checkbox" id="checkCena"> Cena</label>
             </div>
 
-            <div style="margin-bottom:10px;">
+            <div class="checks-grupo">
+              <label><input type="checkbox" id="chkPrimaDominical"> Prima dominical</label>
+              <label><input type="checkbox" id="chkFestivoTrabajado"> Día festivo trabajado</label>
+              <label><input type="checkbox" id="chkOtroConcepto"> Otro concepto</label>
+            </div>
+
+            <hr>
+
+            <div class="input-block">
               <label for="descripcionActividades">Actividades extraordinarias realizadas:</label>
-              <textarea id="descripcionActividades" disabled placeholder="Describe las actividades..." rows="3"
-                style="width:100%;"></textarea>
+              <textarea id="descripcionActividades" disabled placeholder="Describe las actividades..."
+                rows="3"></textarea>
             </div>
 
-            <div class="form-row" style="display:flex; gap:10px; margin-bottom:10px;">
-              <div style="flex:1;">
+            <div class="form-row">
+              <div>
                 <label for="fechaRealizada">Fecha:</label>
                 <input type="date" id="fechaRealizada" disabled>
               </div>
             </div>
 
-            <div class="form-row" style="display:flex; gap:10px; margin-bottom:10px;">
-              <div style="flex:1;">
+            <div class="form-row">
+              <div>
                 <label for="horaInicio">Hora inicio:</label>
                 <input type="time" id="horaInicio" disabled>
               </div>
-              <div style="flex:1;">
+              <div>
                 <label for="horaFin">Hora fin:</label>
                 <input type="time" id="horaFin" disabled>
               </div>
             </div>
 
-
-            <button type="button" id="btnAgregarComida" class="btn" style="margin-bottom:10px;">Agregar
-              Registro</button>
+            <button type="button" id="btnAgregarComida" class="btn">Agregar Registro</button>
             <button type="button" class="btn" id="btnGenerar">Generar Formato</button>
+            <button type="button" class="btn" id="btnVerVistaPrevia">Ver registros actuales</button>
 
           </section>
+
+
 
         </form>
 
@@ -122,24 +122,36 @@
 
   </div>
 
-  <!-- Vista previa de registros de alimentos -->
-  <div id="vista-previa-tabla" style="display:none;">
-    <h2>Vista previa de registros</h2>
-    <table class="tabla-conceptos">
-      <thead>
-        <tr>
-          <th>FECHA</th>
-          <th>HORARIO</th>
-          <th>DESAYUNO</th>
-          <th>COMIDA</th>
-          <th>CENA</th>
-          <th>ACTIVIDADES EXTRAORDINARIAS REALIZADAS</th>
-          <th>ELIMINAR</th>
-        </tr>
-      </thead>
-      <tbody id="tablaConceptosBody"></tbody>
-    </table>
+  <!-- Modal de previsualización de registros -->
+<div id="modalVistaPrevia" class="modal" style="display:none;">
+  <div class="modal-content modal-grande">
+    <h3>Previsualización de registro</h3>
+
+    <div id="modalBody">
+      <p id="mensajeSinDatos">Aún no ha ingresado datos.</p>
+      <table class="tabla-conceptos" id="tablaModalConceptos" style="display:none;">
+        <thead>
+          <tr>
+            <th>FECHA</th>
+            <th>HORARIO</th>
+            <th>DESAYUNO</th>
+            <th>COMIDA</th>
+            <th>CENA</th>
+            <th>PRIMA DOMINICAL</th>
+            <th>DÍA FESTIVO TRABAJADO</th>
+            <th>OTRO CONCEPTO</th>
+            <th>ACTIVIDADES EXTRAORDINARIAS REALIZADAS</th>
+            <th>ELIMINAR</th>
+          </tr>
+        </thead>
+        <tbody id="tablaModalBody"></tbody>
+      </table>
+    </div>
+
+    <button id="btnCerrarModalVistaPrevia" class="btn btn-danger" style="margin-top:10px;">Cerrar</button>
   </div>
+</div>
+
 
   <div id="modalUsuario" class="modal" style="display:none;">
     <div class="modal-content">
