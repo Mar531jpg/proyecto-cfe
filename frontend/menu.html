@@ -46,19 +46,19 @@
           <section id="comidasSeccion" class="comidas-seccion" style="display:none;">
             <h2>Registro de alimentos</h2>
 
-            <div class="checks-grupo">
-              <label><input type="checkbox" id="checkDesayuno"> Desayuno</label>
-              <label><input type="checkbox" id="checkComida"> Comida</label>
-              <label><input type="checkbox" id="checkCena"> Cena</label>
-            </div>
-
-            <div class="checks-grupo">
+            <div class="checks-grupo" style="border-bottom:1px solid #ccc; padding-bottom:8px; margin-bottom:8px;">
               <label><input type="checkbox" id="chkPrimaDominical"> Prima dominical</label>
               <label><input type="checkbox" id="chkFestivoTrabajado"> Día festivo trabajado</label>
               <label><input type="checkbox" id="chkOtroConcepto"> Otro concepto</label>
             </div>
 
-            <hr>
+
+
+            <div class="checks-grupo">
+              <label><input type="checkbox" id="checkDesayuno"> Desayuno</label>
+              <label><input type="checkbox" id="checkComida"> Comida</label>
+              <label><input type="checkbox" id="checkCena"> Cena</label>
+            </div>
 
             <div class="input-block">
               <label for="descripcionActividades">Actividades extraordinarias realizadas:</label>
@@ -122,35 +122,32 @@
 
   </div>
 
-  <!-- Modal de previsualización de registros -->
-<div id="modalVistaPrevia" class="modal" style="display:none;">
-  <div class="modal-content modal-grande">
-    <h3>Previsualización de registro</h3>
+  <div id="modalVistaPrevia" class="modal" style="display:none;">
+    <div class="modal-content modal-grande">
+      <h3>Previsualización de registro</h3>
 
-    <div id="modalBody">
-      <p id="mensajeSinDatos">Aún no ha ingresado datos.</p>
-      <table class="tabla-conceptos" id="tablaModalConceptos" style="display:none;">
-        <thead>
-          <tr>
-            <th>FECHA</th>
-            <th>HORARIO</th>
-            <th>DESAYUNO</th>
-            <th>COMIDA</th>
-            <th>CENA</th>
-            <th>PRIMA DOMINICAL</th>
-            <th>DÍA FESTIVO TRABAJADO</th>
-            <th>OTRO CONCEPTO</th>
-            <th>ACTIVIDADES EXTRAORDINARIAS REALIZADAS</th>
-            <th>ELIMINAR</th>
-          </tr>
-        </thead>
-        <tbody id="tablaModalBody"></tbody>
-      </table>
+      <div id="modalBody">
+        <p id="mensajeSinDatos">Aún no ha ingresado datos.</p>
+        <table class="tabla-conceptos" id="tablaModalConceptos" style="display:none;">
+          <thead>
+            <tr>
+              <th>FECHA</th>
+              <th>HORARIO</th>
+              <th>DESAYUNO</th>
+              <th>COMIDA</th>
+              <th>CENA</th>
+              <th>ACTIVIDADES EXTRAORDINARIAS REALIZADAS</th>
+              <th>ELIMINAR</th>
+            </tr>
+          </thead>
+          <tbody id="tablaModalBody"></tbody>
+        </table>
+      </div>
+
+      <button id="btnCerrarModalVistaPrevia" class="btn btn-danger" style="margin-top:10px;">Cerrar</button>
     </div>
-
-    <button id="btnCerrarModalVistaPrevia" class="btn btn-danger" style="margin-top:10px;">Cerrar</button>
   </div>
-</div>
+
 
 
   <div id="modalUsuario" class="modal" style="display:none;">

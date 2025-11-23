@@ -182,71 +182,6 @@ function ActivarSecciones(motivoId) {
     }
 }
 
-function GenerarVistaPreviaRegistros() {
-
-    // Obtener checks como booleanos
-    const desayunoCheck = $('#checkDesayuno').is(':checked');
-    const comidaCheck = $('#checkComida').is(':checked');
-    const cenaCheck = $('#checkCena').is(':checked');
-
-    const primaDominical = $('#chkPrimaDominical').is(':checked');
-    const festivoTrabajado = $('#chkFestivoTrabajado').is(':checked');
-    const otroConcepto = $('#chkOtroConcepto').is(':checked');
-
-    const descripcion = $('#descripcionActividades').val().trim();
-    const fecha = $('#fechaRealizada').val();
-    const horaInicio = $('#horaInicio').val();
-    const horaFin = $('#horaFin').val();
-
-    // Validación
-    if (!fecha || !horaInicio || !horaFin || descripcion === "") {
-        AlertaCustom("Por favor, llena todos los campos obligatorios.", 3000, "error");
-        return;
-    }
-
-    if (!desayunoCheck && !comidaCheck && !cenaCheck &&
-        !primaDominical && !festivoTrabajado && !otroConcepto) {
-        AlertaCustom("Debes seleccionar al menos un concepto.", 3000, "error");
-        return;
-    }
-
-    const desayunoMonto = desayunoCheck ? 154 : 0;
-    const comidaMonto = comidaCheck ? 301 : 0;
-    const cenaMonto = cenaCheck ? 154 : 0;
-
-    const nuevoRegistro = {
-        fecha,
-        horario: `${horaInicio} - ${horaFin}`,
-
-        desayuno: `$${desayunoMonto.toFixed(2)}`,
-        comida: `$${comidaMonto.toFixed(2)}`,
-        cena: `$${cenaMonto.toFixed(2)}`,
-
-        desayunoCheck,
-        comidaCheck,
-        cenaCheck,
-
-        primaDominical,
-        festivoTrabajado,
-        otroConcepto,
-
-        actividades: descripcion
-    };
-
-    alimentos.push(nuevoRegistro);
-
-    // Limpiar
-    $('input[type="checkbox"]').prop('checked', false);
-    $('#descripcionActividades').val('');
-    $('#fechaRealizada').val('');
-    $('#horaInicio').val('');
-    $('#horaFin').val('');
-
-    AlertaCustom("Registro agregado correctamente.", 2000, "success");
-}
-
-
-
 function EliminarFilaDeVistaPrevia(boton) {
     const fila = $(boton).closest('tr');
     const index = fila.data('index');
@@ -270,6 +205,7 @@ function EliminarFilaDeVistaPrevia(boton) {
 }
 
 
+
 function GenerarReporteAlimentos() {
     if (alimentos.length === 0) {
         AlertaCustom("No hay registros para generar el reporte.", 3000, "error");
@@ -283,19 +219,29 @@ function GenerarReporteAlimentos() {
         return;
     }
 
+    const primaDominical = $('#chkPrimaDominical').is(':checked');
+    const festivoTrabajado = $('#chkFestivoTrabajado').is(':checked');
+    const otroConcepto = $('#chkOtroConcepto').is(':checked');
+
     const reporteData = {
         empleado: {
             nombre: `${datosUsuario.Nombre} ${datosUsuario.ApellidoPaterno} ${datosUsuario.ApellidoMaterno}`,
             rpe: datosUsuario.RPE,
             puesto: datosUsuario.Puesto
         },
-        alimentos: alimentos
+        alimentos: alimentos, 
+        globales: {        
+            primaDominical,
+            festivoTrabajado,
+            otroConcepto
+        }
     };
 
     sessionStorage.setItem('reporteAlimentos', JSON.stringify(reporteData));
 
     window.open('../Templates/Reporte_Alimentos.html', '_blank');
 }
+
 
 function CargarUsuarios() {
     $.ajax({
@@ -449,41 +395,6 @@ function CargarUsuarios() {
     });
 }
 
-function abrirModalVistaPrevia() {
-    if (alimentos.length === 0) {
-        $("#tablaModalConceptos").hide();
-        $("#mensajeSinDatos").show();
-    } else {
-        $("#tablaModalBody").empty();
-
-        alimentos.forEach((item, index) => {
-            const fila = `
-                <tr data-index="${index}">
-                    <td>${item.fecha}</td>
-                    <td>${item.horario}</td>
-                    <td>${item.desayunoCheck ? "✔" : "X"}</td>
-                    <td>${item.comidaCheck ? "✔" : "X"}</td>
-                    <td>${item.cenaCheck ? "✔" : "X"}</td>
-                    <td>${item.primaDominical ? "✔" : "X"}</td>
-                    <td>${item.festivoTrabajado ? "✔" : "X"}</td>
-                    <td>${item.otroConcepto ? "✔" : "X"}</td>
-                    <td>${item.actividades}</td>
-                    <td><button class="btn-eliminar"><img src="Images/borrar.png" alt="Eliminar"></button></td>
-                </tr>
-            `;
-            $("#tablaModalBody").append(fila);
-        });
-
-        $("#mensajeSinDatos").hide();
-        $("#tablaModalConceptos").show();
-    }
-
-    $("#modalVistaPrevia").show();
-}
-
-
-
-
 function AbrirModalUsuario(accion, usuario = null) {
 
     $('#modalTitulo').text(accion + " Usuario");
@@ -533,3 +444,84 @@ function AbrirModalUsuario(accion, usuario = null) {
 
     $('#modalUsuario').fadeIn(200);
 }
+
+function GenerarVistaPreviaRegistros() {
+
+    // Obtener checks de comidas como booleanos
+    const desayunoCheck = $('#checkDesayuno').is(':checked');
+    const comidaCheck = $('#checkComida').is(':checked');
+    const cenaCheck = $('#checkCena').is(':checked');
+
+    const descripcion = $('#descripcionActividades').val().trim();
+    const fecha = $('#fechaRealizada').val();
+    const horaInicio = $('#horaInicio').val();
+    const horaFin = $('#horaFin').val();
+
+    // Validación
+    if (!fecha || !horaInicio || !horaFin || descripcion === "") {
+        AlertaCustom("Por favor, llena todos los campos obligatorios.", 3000, "error");
+        return;
+    }
+
+    if (!desayunoCheck && !comidaCheck && !cenaCheck) {
+        AlertaCustom("Debes seleccionar al menos un concepto de comida.", 3000, "error");
+        return;
+    }
+
+    const desayunoMonto = desayunoCheck ? 154 : 0;
+    const comidaMonto = comidaCheck ? 301 : 0;
+    const cenaMonto = cenaCheck ? 154 : 0;
+
+    const nuevoRegistro = {
+        fecha,
+        horario: `${horaInicio} - ${horaFin}`,
+        desayuno: `$${desayunoMonto.toFixed(2)}`,
+        comida: `$${comidaMonto.toFixed(2)}`,
+        cena: `$${cenaMonto.toFixed(2)}`,
+        desayunoCheck,
+        comidaCheck,
+        cenaCheck,
+        actividades: descripcion
+    };
+
+    alimentos.push(nuevoRegistro);
+
+    $('input[type="checkbox"]').not('#chkPrimaDominical, #chkFestivoTrabajado, #chkOtroConcepto').prop('checked', false);
+    $('#descripcionActividades').val('');
+    $('#fechaRealizada').val('');
+    $('#horaInicio').val('');
+    $('#horaFin').val('');
+
+    AlertaCustom("Registro agregado correctamente.", 2000, "success");
+
+}
+
+function abrirModalVistaPrevia() {
+    if (alimentos.length === 0) {
+        $("#tablaModalConceptos").hide();
+        $("#mensajeSinDatos").show();
+        return;
+    }
+
+    $("#tablaModalBody").empty();
+
+    alimentos.forEach((item, index) => {
+        const fila = `
+            <tr data-index="${index}">
+                <td>${item.fecha}</td>
+                <td>${item.horario}</td>
+                <td>${item.desayunoCheck ? "✔" : "X"}</td>
+                <td>${item.comidaCheck ? "✔" : "X"}</td>
+                <td>${item.cenaCheck ? "✔" : "X"}</td>
+                <td>${item.actividades}</td>
+                <td><button class="btn-eliminar"><img src="Images/borrar.png" alt="Eliminar"></button></td>
+            </tr>
+        `;
+        $("#tablaModalBody").append(fila);
+    });
+
+    $("#mensajeSinDatos").hide();
+    $("#tablaModalConceptos").show();
+    $("#modalVistaPrevia").show();
+}
+
