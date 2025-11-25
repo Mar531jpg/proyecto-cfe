@@ -4,10 +4,11 @@ $(document).ready(function () {
 
     const empleado = reporteData.empleado;
     const alimentos = reporteData.alimentos;
+    const globales = reporteData.globales || { primaDominical: false, festivoTrabajado: false, otroConcepto: false };
 
     const encargadoAutorizar = {
-      nombre: "ING. JORGE ALFREDO LASTRA ARIAS",
-      puesto: "SUPERINTENDENTE ZONA TRANSMISIÓN ISTMO"
+        nombre: "ING. JORGE ALFREDO LASTRA ARIAS",
+        puesto: "SUPERINTENDENTE ZONA TRANSMISIÓN ISTMO"
     };
 
     $(".nombreEmpleado").text(empleado.nombre);
@@ -38,9 +39,45 @@ $(document).ready(function () {
         `);
     });
 
+    // Mostrar los checks globales en VoBo
+    $("#firmaVoBo").html(`
+        <div style="display:flex; flex-direction:column; gap:4px; text-align:left; margin-top:5px;">
+            <span>Prima dominical: ${globales.primaDominical ? "✔" : "X"}</span>
+            <span>Día festivo trabajado: ${globales.festivoTrabajado ? "✔" : "X"}</span>
+            <span>Otro concepto: ${globales.otroConcepto ? "✔" : "X"}</span>
+        </div>
+    `);
+
     $("#totalGeneral").text(total.toFixed(2));
     $("#totalLetras").text(numeroALetras(total));
+
+    $("#btnDescargarPDF").click(function () {
+
+        const { jsPDF } = window.jspdf;
+
+        const elemento = document.querySelector(".pdf-page");
+
+        html2canvas(elemento, { scale: 3 }).then(canvas => {
+
+            const imgData = canvas.toDataURL("image/png");
+
+            const pdf = new jsPDF({
+                orientation: "portrait",
+                unit: "mm",
+                format: "letter"
+            });
+
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const imgWidth = pageWidth;
+            const imgHeight = canvas.height * (imgWidth / canvas.width);
+
+            pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+            pdf.save(`Reporte_Alimentos_${empleado.nombre}.pdf`);
+        });
+
+    });
 });
+
 
 function numeroALetras(num) {
     const unidades = ['','UN','DOS','TRES','CUATRO','CINCO','SEIS','SIETE','OCHO','NUEVE'];

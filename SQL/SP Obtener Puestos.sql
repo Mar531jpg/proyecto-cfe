@@ -1,0 +1,9 @@
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS Obtener_Puestos$$
+CREATE PROCEDURE Obtener_Puestos()
+BEGIN
+    SELECT Id, Nombre FROM Puestos ORDER BY Nombre ASC;
+END $$
+
+DELIMITER ;
