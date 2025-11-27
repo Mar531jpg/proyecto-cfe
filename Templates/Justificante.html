@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Justificante - CFE</title>
+    <link rel="stylesheet" href="../frontend/Styles/Justificante.css">
+</head>
+
+<body>
+    <button id="btnDescargarPDF"
+        style="position:fixed; top:20px; right:20px; padding:10px 15px; z-index:999; cursor:pointer;">
+        Descargar PDF
+    </button>
+
+    <div class="pdf-page">
+
+        <div class="encabezado">
+            <div class="grupo-izq">
+                <img src="../frontend/Images/logo_gobmx.png" class="logo-gob" alt="Gobierno México">
+            </div>
+
+            <div class="grupo-der">
+                <img src="../frontend/Images/logo_mujer_gob.png" class="logo-mujer" alt="Logo Mujer">
+                
+                <div class="titulos-encabezado">
+                    <h3>Dirección General de Transmisión</h3>
+                    <h3>Gerencia Regional de Transmisión Sureste</h3>
+                    <h3>Zona de Transmisión Istmo</h3>
+                </div>
+            </div>
+        </div>
+
+       <h2 class="titulo-central">
+            ACTIVIDADES: <span id="tituloActividad"></span>
+        </h2>
+
+        <div class="contenido">
+            <p id="textoJustificacion"></p>
+        </div>
+
+        <div class="contenedor-firmas">
+            <div class="bloque-firma">
+                <p class="label">ELABORA</p>
+                <div class="firma-linea"></div>
+                <p class="nombre"><span id="nombreElabora"></span></p>
+                <p class="puesto"><span id="puestoElabora"></span></p>
+            </div>
+
+            <div class="bloque-firma">
+                <p class="label">SOLICITA</p>
+                <div class="firma-linea"></div>
+                <p class="nombre"><span id="nombreSolicita"></span></p>
+                <p class="puesto"><span id="puestoSolicita"></span></p>
+            </div>
+        </div>
+
+
+        <div class="pie-pagina">
+            <img src="../frontend/Images/mujer_indigena.png" alt="Pie de página CFE">
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script src="../frontend/Scripts/jquery-3.7.1.min.js"></script>
+    <script src="../frontend/Scripts/Justificante.js"></script>
+</body>
+
+</html>
