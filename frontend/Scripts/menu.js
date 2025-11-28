@@ -14,12 +14,10 @@ $(document).ready(function () {
         $("#tabUsuarios").hide();
     }
 
-    //Autorellenar campos de nombre y puesto
     $('#empleado').val(`${datosUsuario.Nombre} ${datosUsuario.ApellidoPaterno} ${datosUsuario.ApellidoMaterno}`);
     $('#puesto').val(datosUsuario.Puesto);
     let rpe = datosUsuario.RPE;
 
-    //Obtener motivos
     ObtenerMotivos(rpe);
 
     $('#btnCerrarSesion').on('click', function () {
@@ -57,12 +55,10 @@ $(document).ready(function () {
 
 
 
-    //Validar fecha hasta hoy
     let hoy = new Date().toISOString().split('T')[0];
     $('#fechaRealizada').attr('max', hoy);
 
 
-    //Activar la sección de comidas cuando motivo == 3
     $('#motivo').change(function () {
         const motivoId = $(this).val();
 
@@ -204,8 +200,6 @@ function EliminarFilaDeVistaPrevia(boton) {
     AlertaCustom("Registro eliminado.", 2000, "success");
 }
 
-
-
 function GenerarReporteAlimentos() {
     if (alimentos.length === 0) {
         AlertaCustom("No hay registros para generar el reporte.", 3000, "error");
@@ -241,7 +235,6 @@ function GenerarReporteAlimentos() {
 
     window.open('../Templates/Reporte_Alimentos.html', '_blank');
 }
-
 
 function CargarUsuarios() {
     $.ajax({
@@ -447,18 +440,17 @@ function AbrirModalUsuario(accion, usuario = null) {
 
 function GenerarVistaPreviaRegistros() {
 
-    // Obtener checks de comidas como booleanos
     const desayunoCheck = $('#checkDesayuno').is(':checked');
     const comidaCheck = $('#checkComida').is(':checked');
     const cenaCheck = $('#checkCena').is(':checked');
 
     const descripcion = $('#descripcionActividades').val().trim();
+    const Justificante = $('#justifiacionActividades').val().trim();
     const fecha = $('#fechaRealizada').val();
     const horaInicio = $('#horaInicio').val();
     const horaFin = $('#horaFin').val();
 
-    // Validación
-    if (!fecha || !horaInicio || !horaFin || descripcion === "") {
+    if (!fecha || !horaInicio || !horaFin || descripcion === "" || Justificante === "") {
         AlertaCustom("Por favor, llena todos los campos obligatorios.", 3000, "error");
         return;
     }
@@ -481,13 +473,15 @@ function GenerarVistaPreviaRegistros() {
         desayunoCheck,
         comidaCheck,
         cenaCheck,
-        actividades: descripcion
+        actividades: descripcion,
+        justificante: Justificante
     };
 
     alimentos.push(nuevoRegistro);
 
     $('input[type="checkbox"]').not('#chkPrimaDominical, #chkFestivoTrabajado, #chkOtroConcepto').prop('checked', false);
     $('#descripcionActividades').val('');
+    $('#justifiacionActividades').val('');
     $('#fechaRealizada').val('');
     $('#horaInicio').val('');
     $('#horaFin').val('');
