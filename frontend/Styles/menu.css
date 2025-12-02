@@ -422,3 +422,21 @@ h2 {
   max-width: 100px;
   align-self: center;
 }
+
+#formularioHorasExtra {
+    padding: 10px;
+}
+
+#formHorasExtra label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+#formHorasExtra input,
+#formHorasExtra select,
+#formHorasExtra textarea {
+    width: 100%;
+    padding: 6px;
+    margin-bottom: 10px;
+}

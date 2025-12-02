@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    
     let datosUsuario = JSON.parse(sessionStorage.getItem('usuario'));
 
 
@@ -70,8 +70,16 @@ $(document).ready(function () {
         GenerarVistaPreviaRegistros();
     });
 
+     $('#btnAgregarHoraExtra').on('click', function () {
+        GenerarRegistroHorasExtra();
+    });
+
     $('#btnVerVistaPrevia').on('click', function () {
         abrirModalVistaPrevia();
+    });
+
+    $('#btnVerRegistrosHE').on('click', function () {
+        abrirModalVistaPreviaHorasExtra();
     });
 
     
@@ -82,6 +90,11 @@ $(document).ready(function () {
     $('#btnGenerar').on('click', function () {
         GenerarReporteAlimentos();
     });
+
+    $('#btnGenerarFormatoHE').on('click', function () {
+        GenerarReporteHorasExtra();
+    });
+
 
 
     $('#btnCerrarModal').on('click', function () {
@@ -134,14 +147,11 @@ $(document).ready(function () {
 
     });
 
-
-
-
-
-
 });
 
 let alimentos = [];
+let motivoActivo = null; 
+
 
 function ObtenerMotivos(rpe) {
     $.ajax({
@@ -169,14 +179,43 @@ function ObtenerMotivos(rpe) {
 }
 
 function ActivarSecciones(motivoId) {
+
+    // Si cambia el motivo, reinicia registros
+    if (motivoId !== motivoActivo) {
+        alimentos = [];     // tu lista global
+        sessionStorage.removeItem('reporteAlimentos');
+        motivoActivo = motivoId;
+        console.log("Motivo cambiado. Registros reiniciados.");
+    }
+
+    const secciones = [
+        '#comidasSeccion',
+        '#formularioHorasExtra'
+    ];
+
+    secciones.forEach(id => {
+        $(id).hide();
+        $(`${id} input, ${id} textarea, ${id} select`)
+            .prop('disabled', true)
+            .val('');
+    });
+
     if (motivoId === "3") {
         $('#comidasSeccion').show();
-        $('#comidasSeccion input, #comidasSeccion textarea').prop('disabled', false);
-    } else {
-        $('#comidasSeccion').hide();
-        $('#comidasSeccion input, #comidasSeccion textarea').prop('disabled', true).val('');
+        $('#comidasSeccion input, #comidasSeccion textarea, #comidasSeccion select')
+            .prop('disabled', false);
+        return;
+    }
+
+    if (motivoId === "1") {
+        $('#formularioHorasExtra').show();
+        $('#formularioHorasExtra input, #formularioHorasExtra textarea, #formularioHorasExtra select')
+            .prop('disabled', false);
+        return;
     }
 }
+
+
 
 function EliminarFilaDeVistaPrevia(boton) {
     const fila = $(boton).closest('tr');
@@ -519,3 +558,94 @@ function abrirModalVistaPrevia() {
     $("#modalVistaPrevia").show();
 }
 
+function GenerarRegistroHorasExtra() {
+
+    const fecha = $('#fechaRegistro').val();
+    const horaInicio = $('#horaInicioHE').val();
+    const horaFin = $('#horaFinHE').val();
+    const cuentaContable = $('#cuentaContable').val();
+    const desayuno = $('#chkDesayunoHE').is(':checked');
+    const comida = $('#chkComidaHE').is(':checked');
+    const cena = $('#chkCenaHE').is(':checked');
+
+    if (!fecha || !horaInicio || !horaFin) {
+        AlertaCustom("Completa todos los campos de horas extra.", 3000, "error");
+        return;
+    }
+
+    const nuevo = {
+        fecha,
+        horaInicio,
+        horaFin,
+        desayuno,
+        comida,
+        cena,
+        cuentaContable
+    };
+
+    alimentos.push(nuevo);
+
+    $('#fechaRegistro').val('');
+    $('#horaInicioHE').val('');
+    $('#horaFinHE').val('');
+    $('#cuentaContable').val('');
+
+    $('#chkDesayunoHE').prop('checked', false);
+    $('#chkComidaHE').prop('checked', false);
+    $('#chkCenaHE').prop('checked', false);
+
+    AlertaCustom("Registro agregado correctamente.", 2000, "success");
+}
+
+function abrirModalVistaPreviaHorasExtra() {
+
+    $("#tablaModalBody").empty();
+
+    alimentos.forEach((item, index) => {
+        const fila = `
+            <tr data-index="${index}">
+                <td>${item.fecha}</td>
+                <td>${item.horaInicio} - ${item.horaFin}</td>
+                <td>${item.desayuno ? "✔" : "X"}</td>
+                <td>${item.comida ? "✔" : "X"}</td>
+                <td>${item.cena ? "✔" : "X"}</td>
+                <td>--</td>
+                <td><button class="btn-eliminar"><img src="Images/borrar.png"></button></td>
+            </tr>
+        `;
+        $("#tablaModalBody").append(fila);
+    });
+
+    $("#mensajeSinDatos").hide();
+    $("#tablaModalConceptos").show();
+    $("#modalVistaPrevia").show();
+}
+
+function GenerarReporteHorasExtra() {
+
+    if (alimentos.length === 0) {
+        AlertaCustom("No hay registros para generar el reporte.", 3000, "error");
+        return;
+    }
+
+    let datosUsuario = JSON.parse(sessionStorage.getItem('usuario'));
+    if (!datosUsuario) {
+        alert("Debes iniciar sesión primero");
+        window.location.href = "index.html";
+        return;
+    }
+
+
+    const horasExtraData = {
+        empleado: {
+            nombre: `${datosUsuario.Nombre} ${datosUsuario.ApellidoPaterno} ${datosUsuario.ApellidoMaterno}`,
+            rpe: datosUsuario.RPE,
+            puesto: datosUsuario.Puesto
+        },
+        horasExtra: alimentos  
+    };
+
+    sessionStorage.setItem('reporteHorasExtra', JSON.stringify(horasExtraData));
+
+    window.open('../Templates/HorasExtra.html', '_blank');
+}

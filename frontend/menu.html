@@ -102,6 +102,50 @@
 
       </section>
 
+      <section id="formularioHorasExtra" >
+
+        <h2>Registro de Horas Extra</h2>
+
+        <form id="formHorasExtra">
+
+          <label for="cuentaContable">Cuenta contable:</label>
+          <input type="text" id="cuentaContable" placeholder="Ej. 5210-003" required>
+
+          <div class="form-row">
+            <div>
+              <label for="fechaRegistro">Fecha:</label>
+              <input type="date" id="fechaRegistro" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div>
+              <label for="horaInicioHE">Hora inicio:</label>
+              <input type="time" id="horaInicioHE" required>
+            </div>
+            <div>
+              <label for="horaFinHE">Hora fin:</label>
+              <input type="time" id="horaFinHE" required>
+            </div>
+          </div>
+
+          <h3>Alimentos</h3>
+
+          <div class="checks-grupo">
+            <label><input type="checkbox" id="chkDesayunoHE"> Desayuno</label>
+            <label><input type="checkbox" id="chkComidaHE"> Comida</label>
+            <label><input type="checkbox" id="chkCenaHE"> Cena</label>
+          </div>
+
+          <button type="button" id="btnAgregarHoraExtra" class="btn">Agregar Registro</button>
+          <button type="button" id="btnGenerarFormatoHE" class="btn">Generar Formato</button>
+          <button type="button" id="btnVerRegistrosHE" class="btn">Ver registros actuales</button>
+
+        </form>
+
+      </section>
+
+
 
     </div>
     <section id="usuarios">
