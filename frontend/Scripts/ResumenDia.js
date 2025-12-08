@@ -129,15 +129,10 @@ $(document).ready(function () {
         `);
     });
 
-    // ================================
-    // TOTALES FINALES
-    // ================================
     $("#totalImporte").text("$" + totalImporte.toFixed(2));
     $("#totalAlimentos").text("$" + totalAlimentos.toFixed(2));
 
-    // ================================
-    // GENERACIÓN DE PDF
-    // ================================
+
     $("#btnDescargarPDF").click(function () {
 
         const { jsPDF } = window.jspdf;
