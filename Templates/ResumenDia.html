@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen del Día - CFE</title>
+    <link rel="stylesheet" href="../frontend/Styles/ResumenDia.css">
+</head>
+
+<body>
+
+    <button id="btnDescargarPDF"
+        style="position:fixed; top:20px; right:20px; padding:10px 15px; z-index:999; cursor:pointer;">
+        Descargar PDF
+    </button>
+
+    <div class="pdf-page">
+
+        <div class="encabezado">
+            <img src="../frontend/Images/logo_gobmx.png" alt="Logo Gobierno">
+            <div class="titulos">
+                <h2>COMISIÓN FEDERAL DE ELECTRICIDAD</h2>
+                <h3>GERENCIA REGIONAL DE TRANSMISIÓN SURESTE</h3>
+                <h3>ZONA DE TRANSMISIÓN ISTMO</h3>
+            </div>
+        </div>
+
+        <h3 class="titulo-actividad">ACTIVIDADES:<span id="actividades-titulo"></span></h3>
+
+        <br>
+
+        <table class="tabla-principal">
+
+            <thead>
+                <tr>
+                    <th>ZONA</th>
+                    <th>TRABAJADOR</th>
+                    <th>SALARIO</th>
+                    <th>HRS DOBLES</th>
+                    <th>FACTOR HRS. DOBLES</th>
+                    <th>HRS TRIPLES</th>
+                    <th>FACTOR HRS. TRIPLES</th>
+                    <th>IMPORTE A PAGAR</th>
+                    <th>D</th>
+                    <th>C</th>
+                    <th>C</th>
+                    <th>TOTAL DE ALIMENTOS</th>
+                    <th>VIÁTICOS</th>
+                    <th>DÍAS DE VIÁTICOS</th>
+                    <th>OBSERVACIONES</th>
+                </tr>
+
+                <tr class="subtitulo">
+                    <th colspan="15">DEPARTAMENTO DE SUPERINTENDENCIA</th>
+                </tr>
+
+                <tr class="subtitulo">
+                    <th colspan="15">OFICINA CONTROL DE GESTIÓN Y SEGUIMIENTO DE PROGRAMAS</th>
+                </tr>
+            </thead>
+
+            <tbody id="tablaResumenBody">
+            </tbody>
+
+            <tfoot>
+                <tr class="totales">
+                    <td colspan="7" style="text-align:right; font-weight:bold;">Total Tiempo Extraordinario</td>
+                    <td id="totalImporte"></td>
+                    <td colspan="3" style="text-align:right; font-weight:bold;">Total alimentos</td>
+                    <td id="totalAlimentos"></td>
+                    <td colspan="3"></td>
+                </tr>
+            </tfoot>
+
+        </table>
+
+        <br><br>
+
+        <div class="firmas-contenedor">
+
+            <div class="firma">
+                <h4>ELABORA</h4>
+                <div class="firma-espacio"></div>
+                <p id="elaboraNombre"></p>
+                <p id="elaboraPuesto"></p>
+            </div>
+
+            <div class="firma">
+                <h4>SOLICITA</h4>
+                <div class="firma-espacio"></div>
+                <p id="solicitaNombre">ING JORGE ALFREDO LASTRA ARIAS</p>
+                <p id="solicitaPuesto">SUPERINTENDENTE DE ZONA ISTMO</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="../frontend/Scripts/jquery-3.7.1.min.js"></script>
+    <script src="../frontend/Scripts/ResumenDia.js"></script>
+
+</body>
+</html>

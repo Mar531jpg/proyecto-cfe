@@ -422,3 +422,74 @@ h2 {
   max-width: 100px;
   align-self: center;
 }
+
+#formularioHorasExtra {
+    padding: 10px;
+}
+
+#formHorasExtra label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+#formHorasExtra input,
+#formHorasExtra select,
+#formHorasExtra textarea {
+    width: 100%;
+    padding: 6px;
+    margin-bottom: 10px;
+}
+
+
+#registrosHoy {
+  display: none;
+}
+
+#registrosHoy.active {
+  display: flex !important;
+  gap: 20px;
+  margin: 20px;
+}
+
+#registrosHoy > div {
+  flex: 1;
+}
+
+@media (max-width: 900px) {
+  #registrosHoy.active {
+    flex-direction: column;
+  }
+}
+
+
+/* Contenedor general */
+.form-horas-extra {
+  padding: 10px;
+}
+
+.fila-empleado,
+.fila-horas-dobles,
+.fila-horas-triples,
+.fila-viaticos,
+.fila-boton {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.campo-empleado,
+.campo-horas,
+.campo-viaticos {
+  flex: 1;
+}
+
+@media (max-width: 900px) {
+  .fila-empleado,
+  .fila-horas-dobles,
+  .fila-horas-triples,
+  .fila-viaticos,
+  .fila-boton {
+    flex-direction: column;
+  }
+}

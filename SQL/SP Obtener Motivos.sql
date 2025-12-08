@@ -28,7 +28,7 @@ BEGIN
         WHERE 
             Id = 3
         ORDER BY 
-            Nombre ASC;
+              Id ASC;
     ELSE
         -- Si no, mostrar todos los demás 
         SELECT 
@@ -36,8 +36,10 @@ BEGIN
             Nombre
         FROM 
             Motivos_Extra
+		WHERE
+			Id != 3
         ORDER BY 
-            Nombre ASC;
+            Id ASC;
     END IF;
 END $$
 DELIMITER ;

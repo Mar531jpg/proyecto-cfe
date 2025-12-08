@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Tiempo Extraordinario - CFE</title>
+    <link rel="stylesheet" href="../frontend/Styles/HorasExtra.css">
+</head>
+
+<body>
+
+    <button id="btnDescargarPDF"
+        style="position:fixed; top:20px; right:20px; padding:10px 15px; z-index:999; cursor:pointer;">
+        Descargar PDF
+    </button>
+
+    <div class="pdf-page">
+
+        <div class="encabezado">
+            <img src="../frontend/Images/logo_gobmx.png" alt="Logo CFE">
+            <div>
+                <h2>COMISIÓN FEDERAL DE ELECTRICIDAD</h2>
+                <h3>GERENCIA REGIONAL DE TRANSMISIÓN SURESTE<br>ZONA DE TRANSMISIÓN ISTMO</h3>
+                <h3 style="margin-top:4px;">REPORTE DE TIEMPO EXTRAORDINARIO</h3>
+            </div>
+        </div>
+
+        <p style="text-align:right;">CD. JUCHITÁN DE ZARAGOZA, OAX., A <span id="fechaActual"></span></p>
+
+        <p><strong>ÁREA:</strong> ZONA DE TRANSMISIÓN ISTMO</p>
+
+        <table class="tabla-datos">
+            <tr>
+                <td class="label" style="width:20%; text-align:center;">RPE</td>
+                <td class="label" style="width:50%; text-align:center;">NOMBRE</td>
+                <td class="label" style="width:30%; text-align:center;">CATEGORÍA</td>
+            </tr>
+
+            <tr>
+                <td id="rpeEmpleado" style="text-align:center;"></td>
+                <td class="nombreEmpleado" style="text-align:center;"></td>
+                <td class="puestoEmpleado" style="text-align:center;"></td>
+            </tr>
+        </table>
+
+        <br>
+
+        <table class="tabla-conceptos">
+            <thead>
+                <tr>
+                    <th rowspan="2" style="width:15%;">DÍA Y FECHA</th>
+                    <th colspan="3" style="width:20%;">HORAS LABORADAS</th>
+                    <th colspan="3" style="width:15%;">ALIMENTOS</th>
+                    <th rowspan="2" style="width:20%;">CUENTA CONTABLE</th>
+                </tr>
+
+                <tr>
+                    <th>DE</th>
+                    <th>A</th>
+                    <th>Total Horas</th>
+                    <th>D</th>
+                    <th>C</th>
+                    <th>C</th>
+                </tr>
+            </thead>
+
+            <tbody id="tablaHorasExtraBody">
+            </tbody>
+        </table>
+
+        <div class="contenedor-secundario">
+
+            <table class="tabla-secundaria" id="tablaTotales">
+                <tr>
+                    <th colspan="2" class="titulo-seccion">HORAS EXTRAS</th>
+                </tr>
+
+                <tr>
+                    <td>No. Horas a la semana</td>
+                    <td id="horasSemana"></td>
+                </tr>
+
+                <tr>
+                    <td>Menos:</td>
+                    <td id="horasMenos"></td>
+                </tr>
+
+                <tr>
+                    <td>Límite de horas doble:</td>
+                    <td id="horasLimiteDoble"></td>
+                </tr>
+
+                <tr>
+                    <td>No. de horas excedente:</td>
+                    <td id="horasExcedente"></td>
+                </tr>
+
+                <tr>
+                    <th colspan="2" class="titulo-seccion">ALIMENTOS</th>
+                </tr>
+
+                <tr>
+                    <td>Total desayunos</td>
+                    <td id="totalDesayunos"></td>
+                </tr>
+
+                <tr>
+                    <td>Total comidas</td>
+                    <td id="totalComidas"></td>
+                </tr>
+
+                <tr>
+                    <td>Total cenas</td>
+                    <td id="totalCenas"></td>
+                </tr>
+            </table>
+
+            <table class="tabla-secundaria">
+                <tr>
+                    <th colspan="2" class="titulo-seccion">TRABAJADOR</th>
+                </tr>
+
+                <tr>
+                    <td>Firma:</td>
+                    <td class="firma-espacio"></td>
+                </tr>
+
+                <tr>
+                    <td>Nombre:</td>
+                    <td id="trabajadorNombre"></td>
+                </tr>
+
+                <tr>
+                    <td>Categoría:</td>
+                    <td id="trabajadorCategoria"></td>
+                </tr>
+
+
+                <tr>
+                    <th colspan="2" class="titulo-seccion">REVISÓ</th>
+                </tr>
+
+                <tr>
+                    <td>Firma:</td>
+                    <td class="firma-espacio"></td>
+                </tr>
+
+                <tr>
+                    <td>Nombre:</td>
+                    <td id="revisoNombre"></td>
+                </tr>
+
+                <tr>
+                    <td>Categoría:</td>
+                    <td id="revisoCategoria"></td>
+                </tr>
+
+
+                <tr>
+                    <th colspan="2" class="titulo-seccion">AUTORIZÓ</th>
+                </tr>
+
+                <tr>
+                    <td>Firma:</td>
+                    <td class="firma-espacio"></td>
+                </tr>
+
+                <tr>
+                    <td>Nombre:</td>
+                    <td id="autorizoNombre">ING. JORGE ALFREDO LASTRA ARIAS</td>
+                </tr>
+
+                <tr>
+                    <td>Categoría:</td>
+                    <td id="autorizoCategoria">SUPERINTENDENTE DE ZONA T ISTMO. </td>
+                </tr>
+
+            </table>
+
+        </div>
+
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="../frontend/Scripts/jquery-3.7.1.min.js"></script>
+    <script src="../frontend/Scripts/HorasExtra.js"></script>
+
+</body>
+
+</html>
