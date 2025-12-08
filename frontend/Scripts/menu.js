@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    
+
     let datosUsuario = JSON.parse(sessionStorage.getItem('usuario'));
 
 
@@ -12,7 +12,9 @@ $(document).ready(function () {
 
     if (datosUsuario.Catalogo_Puestos !== "Confianza") {
         $("#tabUsuarios").hide();
+        $("#tabRegistrosHoy").hide();
     }
+
 
     $('#empleado').val(`${datosUsuario.Nombre} ${datosUsuario.ApellidoPaterno} ${datosUsuario.ApellidoMaterno}`);
     $('#puesto').val(datosUsuario.Puesto);
@@ -35,7 +37,6 @@ $(document).ready(function () {
 
 
     window.mostrar = function (id, event) {
-
         $('section').removeClass('active');
         $('#' + id).addClass('active');
 
@@ -48,10 +49,14 @@ $(document).ready(function () {
         if (id === 'usuarios') {
             $('.container').hide();
             CargarUsuarios();
+        } else if (id === 'registrosHoy') {
+            $('.container').hide();
+            CargarRegistrosHoy();
         } else {
             $('.container').show();
         }
     };
+
 
 
 
@@ -70,7 +75,7 @@ $(document).ready(function () {
         GenerarVistaPreviaRegistros();
     });
 
-     $('#btnAgregarHoraExtra').on('click', function () {
+    $('#btnAgregarHoraExtra').on('click', function () {
         GenerarRegistroHorasExtra();
     });
 
@@ -82,8 +87,8 @@ $(document).ready(function () {
         abrirModalVistaPreviaHorasExtra();
     });
 
-    
-    $(document).on('click', '#tablaModalBody .btn-eliminar', function() {
+
+    $(document).on('click', '#tablaModalBody .btn-eliminar', function () {
         EliminarFilaDeVistaPrevia(this);
     });
 
@@ -105,7 +110,7 @@ $(document).ready(function () {
         AbrirModalUsuario("Nuevo");
     });
 
-    $("#btnCerrarModalVistaPrevia").click(function() {
+    $("#btnCerrarModalVistaPrevia").click(function () {
         $("#modalVistaPrevia").hide();
     });
 
@@ -150,7 +155,7 @@ $(document).ready(function () {
 });
 
 let alimentos = [];
-let motivoActivo = null; 
+let motivoActivo = null;
 
 
 function ObtenerMotivos(rpe) {
@@ -227,7 +232,7 @@ function EliminarFilaDeVistaPrevia(boton) {
 
     fila.remove();
 
-    $("#tablaModalBody tr").each(function(i) {
+    $("#tablaModalBody tr").each(function (i) {
         $(this).attr("data-index", i);
     });
 
@@ -252,6 +257,44 @@ function GenerarReporteAlimentos() {
         return;
     }
 
+    let totalDesayuno = 0;
+    let totalComida = 0;
+    let totalCena = 0;
+
+    alimentos.forEach(reg => {
+        if (reg.desayunoCheck && parseFloat(reg.desayuno.replace('$', '')) > 0) totalDesayuno++;
+        if (reg.comidaCheck && parseFloat(reg.comida.replace('$', '')) > 0) totalComida++;
+        if (reg.cenaCheck && parseFloat(reg.cena.replace('$', '')) > 0) totalCena++;
+    });
+
+    let formData = {
+        Nombre: datosUsuario.Nombre,
+        ApellidoPaterno: datosUsuario.ApellidoPaterno,
+        ApellidoMaterno: datosUsuario.ApellidoMaterno,
+        TotalDesayuno: totalDesayuno,
+        TotalComida: totalComida,
+        TotalCena: totalCena
+    };
+
+    $.ajax({
+        url: '../backend/Guardar_Registro_Pdf.php',
+        type: 'POST',
+        dataType: 'json',
+        data: formData,
+        success: function (response) {
+            if (response.Result == 1) {
+                AlertaCustom(response.Message, 3000, "success");
+            } else {
+                AlertaCustom(response.Message, 3000, "error");
+            }
+        },
+        error: function () {
+            AlertaCustom("Error al conectar con el servidor", 3000, "error");
+        }
+    });
+
+    console.log("Datos que se enviarán al backend:", formData);
+
     const primaDominical = $('#chkPrimaDominical').is(':checked');
     const festivoTrabajado = $('#chkFestivoTrabajado').is(':checked');
     const otroConcepto = $('#chkOtroConcepto').is(':checked');
@@ -262,8 +305,8 @@ function GenerarReporteAlimentos() {
             rpe: datosUsuario.RPE,
             puesto: datosUsuario.Puesto
         },
-        alimentos: alimentos, 
-        globales: {        
+        alimentos: alimentos,
+        globales: {
             primaDominical,
             festivoTrabajado,
             otroConcepto
@@ -635,6 +678,55 @@ function GenerarReporteHorasExtra() {
         return;
     }
 
+    let totalDesayuno = 0;
+    let totalComida = 0;
+    let totalCena = 0;
+
+    alimentos.forEach((reg) => {
+
+        if (reg.desayuno) {
+            totalDesayuno++;
+        }
+
+        if (reg.comida) {
+            totalComida++;
+        }
+
+        if (reg.cena) {
+            totalCena++;
+        }
+    });
+
+    let formData = {
+        Nombre: datosUsuario.Nombre,
+        ApellidoPaterno: datosUsuario.ApellidoPaterno,
+        ApellidoMaterno: datosUsuario.ApellidoMaterno,
+        TotalDesayuno: totalDesayuno,
+        TotalComida: totalComida,
+        TotalCena: totalCena
+    };
+
+    console.log("Datos que se enviarán al backend:", formData);
+
+
+
+    $.ajax({
+        url: '../backend/Guardar_Registro_Pdf.php',
+        type: 'POST',
+        dataType: 'json',
+        data: formData,
+        success: function (response) {
+            if (response.Result == 1) {
+                AlertaCustom(response.Message, 3000, "success");
+            } else {
+                AlertaCustom(response.Message, 3000, "error");
+            }
+        },
+        error: function () {
+            AlertaCustom("Error al conectar con el servidor", 3000, "error");
+        }
+    });
+
 
     const horasExtraData = {
         empleado: {
@@ -642,10 +734,57 @@ function GenerarReporteHorasExtra() {
             rpe: datosUsuario.RPE,
             puesto: datosUsuario.Puesto
         },
-        horasExtra: alimentos  
+        horasExtra: alimentos
     };
 
     sessionStorage.setItem('reporteHorasExtra', JSON.stringify(horasExtraData));
 
     window.open('../Templates/HorasExtra.html', '_blank');
 }
+
+function CargarRegistrosHoy() {
+    $.ajax({
+        url: '../backend/Obtener_Registros_Hoy.php',
+        type: 'GET',
+        dataType: 'json',
+        data: { IdUsuario: 0 },
+        success: function (response) {
+            if (response.Result == 1) {
+                const tbody = $('#tablaRegistrosHoyBody');
+                tbody.empty();
+
+                response.Registros.forEach(r => {
+                    const fila = $(`
+                        <tr data-nombre="${r.NombreCompleto}" 
+                            data-puesto="${r.Puesto}" 
+                            data-rpe="${r.RPE}"
+                            data-totaldesayunos="${r.TotalDesayunos}" 
+                            data-totalcomidas="${r.TotalComidas}" 
+                            data-totalcenas="${r.TotalCena}">
+                            <td>${r.NombreCompleto}</td>
+                            <td>${r.TotalDesayunos}</td>
+                            <td>${r.TotalComidas}</td>
+                            <td>${r.TotalCena}</td>
+                        </tr>
+                    `);
+                    tbody.append(fila);
+                });
+
+                // Click en fila para autorellenar formulario
+                $('#tablaRegistrosHoyBody tr').on('click', function () {
+                    const fila = $(this);
+                    $('#nombreEmpleado').val(fila.data('nombre'));
+                    $('#puestoEmpleado').val(fila.data('puesto'));
+                    $('#rpeEmpleado').val(fila.data('rpe'));
+                });
+
+            } else {
+                AlertaCustom(response.Message, 3000, "error");
+            }
+        },
+        error: function () {
+            AlertaCustom("Error al conectar con el servidor.", 3000, "error");
+        }
+    });
+}
+

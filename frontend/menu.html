@@ -18,7 +18,9 @@
       <ul>
         <li><a href="#" class="active" onclick="mostrar('formulario', event)">Formulario</a></li>
         <li><a id="tabUsuarios" href="#" onclick="mostrar('usuarios', event)">Usuarios</a></li>
+        <li><a id="tabRegistrosHoy" href="#" onclick="mostrar('registrosHoy', event)">Registros del Día</a></li>
       </ul>
+
 
       <div style="margin-top: 10px; text-align: center;">
         <button id="btnCerrarSesion" class="btn btn-danger">Cerrar Sesión</button>
@@ -102,7 +104,7 @@
 
       </section>
 
-      <section id="formularioHorasExtra" >
+      <section id="formularioHorasExtra">
 
         <h2>Registro de Horas Extra</h2>
 
@@ -169,6 +171,89 @@
         <tbody id="tablaUsuariosBody"></tbody>
       </table>
     </section>
+
+    <section id="registrosHoy">
+  <div>
+    <h2>Registros del Día</h2>
+    <table class="tabla-conceptos">
+      <thead>
+        <tr>
+          <th>Nombre completo</th>
+          <th>Total desayunos</th>
+          <th>Total comidas</th>
+          <th>Total cenas</th>
+        </tr>
+      </thead>
+      <tbody id="tablaRegistrosHoyBody"></tbody>
+    </table>
+  </div>
+
+  <div class="form-horas-extra">
+  <h2>Formulario de Captura</h2>
+  <form id="formRegistroHoy">
+
+    <div class="fila-empleado">
+      <div class="campo-empleado">
+        <label>Nombre:</label>
+        <input type="text" id="nombreEmpleado" disabled>
+      </div>
+      <div class="campo-empleado">
+        <label>Puesto:</label>
+        <input type="text" id="puestoEmpleado" disabled>
+      </div>
+      <div class="campo-empleado">
+        <label>RPE:</label>
+        <input type="text" id="rpeEmpleado" disabled>
+      </div>
+    </div>
+
+    <div class="fila-horas-dobles">
+      <div class="campo-horas">
+        <label>Salario:</label>
+        <input type="number" id="salario" min="0">
+      </div>
+      <div class="campo-horas">
+        <label>No. Horas Dobles:</label>
+        <input type="number" id="horasDobles" min="0">
+      </div>
+      <div class="campo-horas">
+        <label>Factor Horas Dobles:</label>
+        <input type="number" id="factorDobles" step="0.01" min="0">
+      </div>
+    </div>
+
+    <div class="fila-horas-triples">
+      <div class="campo-horas">
+        <label>No. Horas Triples:</label>
+        <input type="number" id="horasTriples" min="0">
+      </div>
+      <div class="campo-horas">
+        <label>Factor Horas Triples:</label>
+        <input type="number" id="factorTriples" step="0.01" min="0">
+      </div>
+    </div>
+
+    <div class="fila-viaticos">
+      <div class="campo-viaticos">
+        <label>Viáticos:</label>
+        <input type="number" id="viaticos" step="0.01" min="0">
+      </div>
+      <div class="campo-viaticos">
+        <label>Días Viáticos:</label>
+        <input type="number" id="diasViaticos" min="0">
+      </div>
+    </div>
+
+    <div class="fila-boton">
+      <button type="button" class="btn" id="btnGuardarRegistro">Guardar</button>
+    </div>
+
+  </form>
+</div>
+
+</section>
+
+
 
   </div>
 
