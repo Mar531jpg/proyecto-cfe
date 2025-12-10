@@ -91,6 +91,19 @@ $(document).ready(function () {
         $("#modalRegistrosDia").hide();
     });
 
+    $('#btnFiltrarRegistros').on('click', function() {
+        const fechaInicio = $('#fechaInicio').val();
+        const fechaFin = $('#fechaFin').val();
+
+        if ((fechaInicio && !fechaFin) || (!fechaInicio && fechaFin)) {
+            AlertaCustom("Debes ingresar ambas fechas para filtrar.", 3000, "error");
+            return;
+        }
+
+        CargarRegistrosHoy(fechaInicio, fechaFin);
+    });
+
+
 
     $('#btnVerRegistrosDia').on('click', function () {
         abrirModalRegistrosDia();
@@ -172,7 +185,7 @@ $(document).ready(function () {
         let registrosDia = JSON.parse(sessionStorage.getItem("registrosDia")) || [];
 
         const nuevoRegistro = {
-            zona: rpe,
+            rpe: rpe,
             trabajador: nombre,
             puesto: puesto,
             salario: salario,
@@ -837,12 +850,31 @@ function GenerarReporteHorasExtra() {
     window.open('../Templates/HorasExtra.html', '_blank');
 }
 
-function CargarRegistrosHoy() {
+function CargarRegistrosHoy(fechaInicio = "", fechaFin = "") {
+    if (fechaInicio && fechaFin) {
+        const inicio = new Date(fechaInicio);
+        const fin = new Date(fechaFin);
+
+        if (isNaN(inicio.getTime()) || isNaN(fin.getTime())) {
+            AlertaCustom("Fechas inválidas.", 3000, "error");
+            return;
+        }
+
+        if (inicio > fin) {
+            AlertaCustom("La fecha de inicio no puede ser mayor que la fecha fin.", 3000, "error");
+            return;
+        }
+    }
+
     $.ajax({
         url: '../backend/Obtener_Registros_Hoy.php',
         type: 'GET',
         dataType: 'json',
-        data: { IdUsuario: 0 },
+        data: { 
+            IdUsuario: 0,
+            fechaInicio: fechaInicio,
+            fechaFin: fechaFin
+        },
         success: function (response) {
             if (response.Result == 1) {
                 const tbody = $('#tablaRegistrosHoyBody');
@@ -872,12 +904,10 @@ function CargarRegistrosHoy() {
                     $('#puestoEmpleado').val(fila.data('puesto'));
                     $('#rpeEmpleado').val(fila.data('rpe'));
 
-                    // Nuevos campos de totales
                     $('#totalDesayunos').val(fila.data('totaldesayunos'));
                     $('#totalComidas').val(fila.data('totalcomidas'));
                     $('#totalCenas').val(fila.data('totalcenas'));
                 });
-
 
             } else {
                 AlertaCustom(response.Message, 3000, "error");
@@ -888,6 +918,7 @@ function CargarRegistrosHoy() {
         }
     });
 }
+
 
 function abrirModalRegistrosDia() {
     let registros = JSON.parse(sessionStorage.getItem("registrosDia")) || [];

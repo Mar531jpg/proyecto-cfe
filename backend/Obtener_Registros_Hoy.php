@@ -5,7 +5,9 @@ header('Content-Type: application/json');
 
 require_once 'config.php';
 
-$idUsuario = isset($_GET['IdUsuario']) ? intval($_GET['IdUsuario']) : 0;
+$idUsuario   = isset($_GET['IdUsuario']) ? intval($_GET['IdUsuario']) : 0;
+$fechaInicio = isset($_GET['fechaInicio']) ? $_GET['fechaInicio'] : null;
+$fechaFin    = isset($_GET['fechaFin']) ? $_GET['fechaFin'] : null;
 
 $conexion = new mysqli($DB_SERVIDOR, $DB_USUARIO, $DB_CLAVE, $DB_NOMBRE, $DB_PUERTO);
 
@@ -15,13 +17,16 @@ if ($conexion->connect_error) {
     exit;
 }
 
-$storedProcedure = $conexion->prepare("CALL ObtenerTotalesHoy(?)");
+$storedProcedure = $conexion->prepare("CALL ObtenerTotalesHoy(?, ?, ?)");
 if (!$storedProcedure) {
     echo json_encode(['Result' => 0, 'Message' => 'Error al preparar la consulta: ' . $conexion->error]);
     exit;
 }
 
-$storedProcedure->bind_param("i", $idUsuario);
+$fechaInicioParam = $fechaInicio ? $fechaInicio : null;
+$fechaFinParam    = $fechaFin ? $fechaFin : null;
+
+$storedProcedure->bind_param("iss", $idUsuario, $fechaInicioParam, $fechaFinParam);
 
 if (!$storedProcedure->execute()) {
     echo json_encode(['Result' => 0, 'Message' => 'Error al ejecutar la consulta: ' . $storedProcedure->error]);

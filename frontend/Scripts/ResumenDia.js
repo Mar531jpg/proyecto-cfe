@@ -8,8 +8,13 @@ $(document).ready(function () {
 
     const datosUsuario = JSON.parse(sessionStorage.getItem('usuario')) || { nombre: "", puesto: "" };
 
-    $("#elaboraNombre").text(datosUsuario.Nombre || "");
-    $("#elaboraPuesto").text(datosUsuario.Puesto || "");
+    // Si el usuario no tiene datos, tomarlos del primer registro
+    const primerRegistro = registros[0] || {};
+    const nombreParaMostrar = datosUsuario.Nombre || primerRegistro.trabajador || "";
+    const puestoParaMostrar = datosUsuario.Puesto || primerRegistro.puesto || "";
+
+    $("#elaboraNombre").text(nombreParaMostrar);
+    $("#elaboraPuesto").text(puestoParaMostrar);
     //$("#actividades-titulo").text("Resumen del Día"); 
 
     let totalImporte = 0;
@@ -17,45 +22,41 @@ $(document).ready(function () {
 
     registros.forEach(reg => {
 
-    const importe = (Number(reg.factorDobles) || 0) + (Number(reg.factorTriples) || 0);
-    totalImporte += importe;
+        const importe = (Number(reg.factorDobles) || 0) + (Number(reg.factorTriples) || 0);
+        totalImporte += importe;
 
-    const desayunoMonto = (Number(reg.desayuno) || 0) * 154;
-    const comidaMonto   = (Number(reg.comida)   || 0) * 301;
-    const cenaMonto     = (Number(reg.cena)     || 0) * 154;
+        const desayunoMonto = (Number(reg.desayuno) || 0) * 154;
+        const comidaMonto = (Number(reg.comida) || 0) * 301;
+        const cenaMonto = (Number(reg.cena) || 0) * 154;
 
-    const totalAlimentosRegistro = desayunoMonto + comidaMonto + cenaMonto;
-    totalAlimentos += totalAlimentosRegistro;
+        const totalAlimentosRegistro = desayunoMonto + comidaMonto + cenaMonto;
+        totalAlimentos += totalAlimentosRegistro;
 
-    $("#tablaResumenBody").append(`
-        <tr>
-            <td>${reg.zona || ""}</td>
-            <td>${reg.trabajador || ""}</td>
+        $("#tablaResumenBody").append(`
+            <tr>
+                <td>${reg.rpe || primerRegistro.rpe || ""}</td>  <!-- RPE de registro si no hay usuario -->
+                <td>${reg.trabajador || ""}</td>
 
-            <td style="text-align:center;">$${reg.salario || "0"}</td>
+                <td style="text-align:center;">$${reg.salario || "0"}</td>
+                <td style="text-align:center;">${reg.hrsDobles || "0"}</td>
+                <td style="text-align:center;">$${reg.factorDobles || "0"}</td>
+                <td style="text-align:center;">${reg.hrsTriples || "0"}</td>
+                <td style="text-align:center;">$${reg.factorTriples || "0"}</td>
+                <td style="text-align:center;">$${importe.toFixed(2)}</td>
 
-            <td style="text-align:center;">${reg.hrsDobles || "0"}</td>
-            <td style="text-align:center;">$${reg.factorDobles || "0"}</td>
+                <td style="text-align:center;">${Number(reg.desayuno) || 0}</td>
+                <td style="text-align:center;">${Number(reg.comida) || 0}</td>
+                <td style="text-align:center;">${Number(reg.cena) || 0}</td>
 
-            <td style="text-align:center;">${reg.hrsTriples || "0"}</td>
-            <td style="text-align:center;">$${reg.factorTriples || "0"}</td>
+                <td style="text-align:center;">$${totalAlimentosRegistro.toFixed(2)}</td>
 
-            <td style="text-align:center;">$${importe.toFixed(2)}</td>
+                <td style="text-align:center;">$${reg.viaticos || "0"}</td>
+                <td style="text-align:center;">${reg.diasViaticos || "0"}</td>
+                <td>${reg.observaciones || ""}</td>
+            </tr>
+        `);
 
-            <td style="text-align:center;">${Number(reg.desayuno) || 0}</td>
-            <td style="text-align:center;">${Number(reg.comida)   || 0}</td>
-            <td style="text-align:center;">${Number(reg.cena)     || 0}</td>
-
-            <td style="text-align:center;">$${totalAlimentosRegistro.toFixed(2)}</td>
-
-            <td style="text-align:center;">$${reg.viaticos || "0"}</td>
-            <td style="text-align:center;">${reg.diasViaticos || "0"}</td>
-
-            <td>${reg.observaciones || ""}</td>
-        </tr>
-    `);
-});
-
+    });
 
     $("#totalImporte").text("$" + totalImporte.toFixed(2));
     $("#totalAlimentos").text("$" + totalAlimentos.toFixed(2));
@@ -64,8 +65,8 @@ $(document).ready(function () {
 
         const reporteData = {
             elabora: {
-                nombre: datosUsuario.Nombre || "",
-                puesto: datosUsuario.Puesto || ""
+                nombre: nombreParaMostrar,
+                puesto: puestoParaMostrar
             },
             actividad: "Resumen del Día",
             registros: registros
