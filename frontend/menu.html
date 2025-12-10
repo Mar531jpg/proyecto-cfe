@@ -173,85 +173,124 @@
     </section>
 
     <section id="registrosHoy">
-  <div>
-    <h2>Registros del Día</h2>
-    <table class="tabla-conceptos">
-      <thead>
-        <tr>
-          <th>Nombre completo</th>
-          <th>Total desayunos</th>
-          <th>Total comidas</th>
-          <th>Total cenas</th>
-        </tr>
-      </thead>
-      <tbody id="tablaRegistrosHoyBody"></tbody>
-    </table>
-  </div>
 
-  <div class="form-horas-extra">
-  <h2>Formulario de Captura</h2>
-  <form id="formRegistroHoy">
 
-    <div class="fila-empleado">
-      <div class="campo-empleado">
-        <label>Nombre:</label>
-        <input type="text" id="nombreEmpleado" disabled>
-      </div>
-      <div class="campo-empleado">
-        <label>Puesto:</label>
-        <input type="text" id="puestoEmpleado" disabled>
-      </div>
-      <div class="campo-empleado">
-        <label>RPE:</label>
-        <input type="text" id="rpeEmpleado" disabled>
-      </div>
-    </div>
+      <div>
+        <h2>Registros del Día</h2>
+        <table class="tabla-conceptos">
+          <thead>
+            <tr>
+              <th>Nombre completo</th>
+              <th>Total desayunos</th>
+              <th>Total comidas</th>
+              <th>Total cenas</th>
+            </tr>
+          </thead>
+          <div class="filtros-fecha" style="margin-bottom: 15px; display:flex; gap:10px; align-items:center;">
+            <label>Fecha inicio:</label>
+            <input type="date" id="fechaInicio">
 
-    <div class="fila-horas-dobles">
-      <div class="campo-horas">
-        <label>Salario:</label>
-        <input type="number" id="salario" min="0">
-      </div>
-      <div class="campo-horas">
-        <label>No. Horas Dobles:</label>
-        <input type="number" id="horasDobles" min="0">
-      </div>
-      <div class="campo-horas">
-        <label>Factor Horas Dobles:</label>
-        <input type="number" id="factorDobles" step="0.01" min="0">
-      </div>
-    </div>
+            <label>Fecha fin:</label>
+            <input type="date" id="fechaFin">
 
-    <div class="fila-horas-triples">
-      <div class="campo-horas">
-        <label>No. Horas Triples:</label>
-        <input type="number" id="horasTriples" min="0">
-      </div>
-      <div class="campo-horas">
-        <label>Factor Horas Triples:</label>
-        <input type="number" id="factorTriples" step="0.01" min="0">
-      </div>
-    </div>
+            <button type="button" class="btn" id="btnFiltrarRegistros">Filtrar</button>
+          </div>
 
-    <div class="fila-viaticos">
-      <div class="campo-viaticos">
-        <label>Viáticos:</label>
-        <input type="number" id="viaticos" step="0.01" min="0">
+          <tbody id="tablaRegistrosHoyBody"></tbody>
+        </table>
       </div>
-      <div class="campo-viaticos">
-        <label>Días Viáticos:</label>
-        <input type="number" id="diasViaticos" min="0">
+
+      <div class="form-horas-extra">
+        <h2>Formulario de Captura</h2>
+        <form id="formRegistroHoy">
+
+          <div class="fila-empleado">
+            <div class="campo-empleado">
+              <label>Nombre:</label>
+              <input type="text" id="nombreEmpleado" disabled>
+            </div>
+            <div class="campo-empleado">
+              <label>Puesto:</label>
+              <input type="text" id="puestoEmpleado" disabled>
+            </div>
+            <div class="campo-empleado">
+              <label>RPE:</label>
+              <input type="text" id="rpeEmpleado" disabled>
+            </div>
+          </div>
+
+          <div class="fila-totales-comida">
+            <div class="campo-totales">
+              <label>Total Desayunos:</label>
+              <input type="number" id="totalDesayunos">
+            </div>
+
+            <div class="campo-totales">
+              <label>Total Comidas:</label>
+              <input type="number" id="totalComidas">
+            </div>
+
+            <div class="campo-totales">
+              <label>Total Cenas:</label>
+              <input type="number" id="totalCenas">
+            </div>
+          </div>
+
+
+          <div class="fila-horas-dobles">
+            <div class="campo-horas">
+              <label>Salario:</label>
+              <input type="number" id="salario" min="0">
+            </div>
+            <div class="campo-horas">
+              <label>No. Horas Dobles:</label>
+              <input type="number" id="horasDobles" min="0">
+            </div>
+            <div class="campo-horas">
+              <label>Factor Horas Dobles:</label>
+              <input type="number" id="factorDobles" step="0.01" min="0">
+            </div>
+          </div>
+
+          <div class="fila-horas-triples">
+            <div class="campo-horas">
+              <label>No. Horas Triples:</label>
+              <input type="number" id="horasTriples" min="0">
+            </div>
+            <div class="campo-horas">
+              <label>Factor Horas Triples:</label>
+              <input type="number" id="factorTriples" step="0.01" min="0">
+            </div>
+          </div>
+
+          <div class="fila-viaticos">
+            <div class="campo-viaticos">
+              <label>Viáticos:</label>
+              <input type="number" id="viaticos" step="0.01" min="0">
+            </div>
+            <div class="campo-viaticos">
+              <label>Días Viáticos:</label>
+              <input type="number" id="diasViaticos" min="0">
+            </div>
+          </div>
+
+          <div class="fila-observaciones">
+            <label>Observaciones:</label>
+            <textarea id="observaciones" rows="5"></textarea>
+          </div>
+
+
+          <div class="fila-boton">
+            <button type="button" class="btn" id="btnGenerarReporteDia">GenerarReporte</button>
+            <button type="button" class="btn" id="btnAgregarRegistroDia">Agregar registro del día</button>
+            <button type="button" class="btn" id="btnVerRegistrosDia">Ver registros del día</button>
+
+          </div>
+
+        </form>
       </div>
-    </div>
 
-    <div class="fila-boton">
-      <button type="button" class="btn" id="btnGuardarRegistro">Guardar</button>
-    </div>
-
-  </form>
-</div>
-
-</section>
+    </section>
 
 
 
@@ -335,6 +374,34 @@
       </div>
     </div>
   </div>
+
+  <div id="modalRegistrosDia" class="modal" style="display:none;">
+    <div class="modal-content modal-grande">
+      <h3>Registros capturados del día</h3>
+
+      <div id="modalBodyRegistros">
+        <p id="mensajeSinRegistros">Aún no hay registros agregados.</p>
+
+        <table class="tabla-conceptos" id="tablaModalRegistros" style="display:none;">
+          <thead>
+            <tr>
+              <th>Trabajador</th>
+              <th>Salario</th>
+              <th>Hrs Dobles</th>
+              <th>Hrs Triples</th>
+              <th>Viáticos</th>
+              <th>Observaciones</th>
+              <th>Eliminar</th>
+            </tr>
+          </thead>
+          <tbody id="tablaModalRegistrosBody"></tbody>
+        </table>
+      </div>
+
+      <button id="btnCerrarModalRegistros" class="btn btn-danger" style="margin-top:10px;">Cerrar</button>
+    </div>
+  </div>
+
 
 
   <div id="modalContrasena" class="modal" style="display:none;">

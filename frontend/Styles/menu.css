@@ -278,7 +278,8 @@ h2 {
 
 
 .modal-content .btn {
-    width: 100%;
+    width: 70px;
+    align-self: center;
 }
 
 
@@ -472,7 +473,8 @@ h2 {
 .fila-horas-dobles,
 .fila-horas-triples,
 .fila-viaticos,
-.fila-boton {
+.fila-boton,
+.fila-totales-comida {
   display: flex;
   gap: 15px;
   margin-bottom: 15px;
@@ -480,7 +482,8 @@ h2 {
 
 .campo-empleado,
 .campo-horas,
-.campo-viaticos {
+.campo-viaticos,
+.campo-totales {
   flex: 1;
 }
 
@@ -492,4 +495,107 @@ h2 {
   .fila-boton {
     flex-direction: column;
   }
+}
+#modalRegistrosDia.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+#modalRegistrosDia .modal-content {
+  background-color: var(--cfe-blanco);
+  width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#modalRegistrosDia .modal-content h3 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+
+#modalRegistrosDia .tabla-conceptos {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--cfe-blanco);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 12px;
+  margin: 0 auto;
+}
+
+#modalRegistrosDia .tabla-conceptos thead {
+  background-color: var(--cfe-verde);
+  color: var(--cfe-blanco);
+  text-align: left;
+}
+
+#modalRegistrosDia .tabla-conceptos th,
+#modalRegistrosDia .tabla-conceptos td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  vertical-align: top;
+  text-align: center;
+  min-width: 120px;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+#modalRegistrosDia .tabla-conceptos th {
+  font-weight: 600;
+}
+
+#modalRegistrosDia .tabla-conceptos tbody tr:hover {
+  background-color: #f1f1f1;
+  transition: 0.3s;
+}
+
+#modalRegistrosDia .tabla-conceptos td:last-child,
+#modalRegistrosDia .tabla-conceptos th:last-child {
+  min-width: 200px;
+  text-align: center;
+}
+
+
+#modalRegistrosDia #mensajeSinRegistros {
+  text-align: center;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+#modalRegistrosDia #btnCerrarModalRegistros:hover {
+  background-color: #B53A22;
+}
+
+.btn-eliminar-registro {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+.btn-eliminar-registro img {
+    width: 20px;
+    height: 20px;
+    padding-left: 100px;
 }

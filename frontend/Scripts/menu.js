@@ -87,6 +87,32 @@ $(document).ready(function () {
         abrirModalVistaPreviaHorasExtra();
     });
 
+    $("#btnCerrarModalRegistros").on("click", function () {
+        $("#modalRegistrosDia").hide();
+    });
+
+    $('#btnFiltrarRegistros').on('click', function() {
+        const fechaInicio = $('#fechaInicio').val();
+        const fechaFin = $('#fechaFin').val();
+
+        if ((fechaInicio && !fechaFin) || (!fechaInicio && fechaFin)) {
+            AlertaCustom("Debes ingresar ambas fechas para filtrar.", 3000, "error");
+            return;
+        }
+
+        CargarRegistrosHoy(fechaInicio, fechaFin);
+    });
+
+
+
+    $('#btnVerRegistrosDia').on('click', function () {
+        abrirModalRegistrosDia();
+    });
+
+    
+    $('#btnGenerarReporteDia').on('click', function () {
+        GenerarReporteDia();
+    });
 
     $(document).on('click', '#tablaModalBody .btn-eliminar', function () {
         EliminarFilaDeVistaPrevia(this);
@@ -113,6 +139,90 @@ $(document).ready(function () {
     $("#btnCerrarModalVistaPrevia").click(function () {
         $("#modalVistaPrevia").hide();
     });
+
+
+    $("#btnAgregarRegistroDia").on("click", function () {
+
+        const nombre = $("#nombreEmpleado").val().trim();
+        const puesto = $("#puestoEmpleado").val().trim();
+        const rpe = $("#rpeEmpleado").val().trim();
+
+        const totalDesayunos = parseInt($("#totalDesayunos").val()) || 0;
+        const totalComidas = parseInt($("#totalComidas").val()) || 0;
+        const totalCenas = parseInt($("#totalCenas").val()) || 0;
+
+        const observaciones = $("#observaciones").val().trim();
+
+        const salario = parseFloat($("#salario").val()) || 0;
+        const horasDobles = parseFloat($("#horasDobles").val()) || 0;
+        const factorDobles = parseFloat($("#factorDobles").val()) || 0;
+        const horasTriples = parseFloat($("#horasTriples").val()) || 0;
+        const factorTriples = parseFloat($("#factorTriples").val()) || 0;
+        const viaticos = parseFloat($("#viaticos").val()) || 0;
+        const diasViaticos = parseFloat($("#diasViaticos").val()) || 0;
+
+
+        if (nombre === "" || puesto === "" || rpe === "") {
+            AlertaCustom("Selecciona un empleado de la tabla antes de agregar.", 3000, "error");
+            return;
+        }
+
+        if (isNaN(totalDesayunos) || isNaN(totalComidas) || isNaN(totalCenas)) {
+            AlertaCustom("Los totales de comida no pueden estar vacíos.", 3000, "error");
+            return;
+        }
+
+        if (observaciones === "") {
+            AlertaCustom("Debes ingresar observaciones.", 3000, "error");
+            return;
+        }
+
+        if (salario <= 0) {
+            AlertaCustom("Debes ingresar un salario válido.", 3000, "error");
+            return;
+        }
+
+        let registrosDia = JSON.parse(sessionStorage.getItem("registrosDia")) || [];
+
+        const nuevoRegistro = {
+            rpe: rpe,
+            trabajador: nombre,
+            puesto: puesto,
+            salario: salario,
+            hrsDobles: horasDobles,
+            factorDobles: factorDobles,
+            hrsTriples: horasTriples,
+            factorTriples: factorTriples,
+            totalDesayunos: totalDesayunos,
+            totalComidas: totalComidas,
+            totalCenas: totalCenas,
+            desayuno: totalDesayunos,
+            comida: totalComidas,
+            cena: totalCenas,
+            viaticos: viaticos,
+            diasViaticos: diasViaticos,
+            observaciones: observaciones
+        };
+
+
+        registrosDia.push(nuevoRegistro);
+
+        sessionStorage.setItem("registrosDia", JSON.stringify(registrosDia));
+
+
+        $("#formRegistroHoy")[0].reset();
+
+        $("#nombreEmpleado").val(nombre);
+        $("#puestoEmpleado").val(puesto);
+        $("#rpeEmpleado").val(rpe);
+        $("#totalDesayunos").val(totalDesayunos);
+        $("#totalComidas").val(totalComidas);
+        $("#totalCenas").val(totalCenas);
+
+        AlertaCustom("Registro agregado correctamente.", 2000, "success");
+    });
+
+
 
     $('#btnGuardarUsuario').on('click', function () {
 
@@ -219,8 +329,6 @@ function ActivarSecciones(motivoId) {
         return;
     }
 }
-
-
 
 function EliminarFilaDeVistaPrevia(boton) {
     const fila = $(boton).closest('tr');
@@ -742,12 +850,31 @@ function GenerarReporteHorasExtra() {
     window.open('../Templates/HorasExtra.html', '_blank');
 }
 
-function CargarRegistrosHoy() {
+function CargarRegistrosHoy(fechaInicio = "", fechaFin = "") {
+    if (fechaInicio && fechaFin) {
+        const inicio = new Date(fechaInicio);
+        const fin = new Date(fechaFin);
+
+        if (isNaN(inicio.getTime()) || isNaN(fin.getTime())) {
+            AlertaCustom("Fechas inválidas.", 3000, "error");
+            return;
+        }
+
+        if (inicio > fin) {
+            AlertaCustom("La fecha de inicio no puede ser mayor que la fecha fin.", 3000, "error");
+            return;
+        }
+    }
+
     $.ajax({
         url: '../backend/Obtener_Registros_Hoy.php',
         type: 'GET',
         dataType: 'json',
-        data: { IdUsuario: 0 },
+        data: { 
+            IdUsuario: 0,
+            fechaInicio: fechaInicio,
+            fechaFin: fechaFin
+        },
         success: function (response) {
             if (response.Result == 1) {
                 const tbody = $('#tablaRegistrosHoyBody');
@@ -770,12 +897,16 @@ function CargarRegistrosHoy() {
                     tbody.append(fila);
                 });
 
-                // Click en fila para autorellenar formulario
                 $('#tablaRegistrosHoyBody tr').on('click', function () {
                     const fila = $(this);
+
                     $('#nombreEmpleado').val(fila.data('nombre'));
                     $('#puestoEmpleado').val(fila.data('puesto'));
                     $('#rpeEmpleado').val(fila.data('rpe'));
+
+                    $('#totalDesayunos').val(fila.data('totaldesayunos'));
+                    $('#totalComidas').val(fila.data('totalcomidas'));
+                    $('#totalCenas').val(fila.data('totalcenas'));
                 });
 
             } else {
@@ -788,3 +919,98 @@ function CargarRegistrosHoy() {
     });
 }
 
+
+function abrirModalRegistrosDia() {
+    let registros = JSON.parse(sessionStorage.getItem("registrosDia")) || [];
+
+    if (registros.length === 0) {
+        $("#tablaModalRegistros").hide();
+        $("#mensajeSinRegistros").show();
+        $("#modalRegistrosDia").show();
+        return;
+    }
+
+    $("#tablaModalRegistrosBody").empty();
+
+    registros.forEach((item, index) => {
+        const fila = `
+            <tr data-index="${index}">
+                <td>${item.trabajador}</td>
+                <td>${item.salario}</td>
+                <td>${item.hrsDobles}</td>
+                <td>${item.hrsTriples}</td>
+                <td>${item.viaticos}</td>
+                <td>${item.observaciones}</td>
+                <td>
+                    <button class="btn-eliminar-registro" data-index="${index}">
+                        <img src="Images/borrar.png" alt="Eliminar" />
+                    </button>
+                </td>
+            </tr>
+        `;
+        $("#tablaModalRegistrosBody").append(fila);
+    });
+
+    $("#mensajeSinRegistros").hide();
+    $("#tablaModalRegistros").show();
+    $("#modalRegistrosDia").show();
+}
+
+// Eliminar registro
+$(document).on("click", ".btn-eliminar-registro", function () {
+    const index = $(this).data("index");
+
+    let registros = JSON.parse(sessionStorage.getItem("registrosDia")) || [];
+
+    registros.splice(index, 1);
+
+    sessionStorage.setItem("registrosDia", JSON.stringify(registros));
+
+
+    registrosDia = registros;
+
+    abrirModalRegistrosDia();
+
+    AlertaCustom("Registro eliminado.", 2000, "success");
+});
+
+function GenerarReporteDia() {
+    const registrosDia = JSON.parse(sessionStorage.getItem("registrosDia")) || [];
+
+    if (registrosDia.length === 0) {
+        AlertaCustom("No hay registros para generar el reporte del día.", 3000, "error");
+        return;
+    }
+
+    let datosUsuario = JSON.parse(sessionStorage.getItem('usuario'));
+    if (!datosUsuario) {
+        alert("Debes iniciar sesión primero");
+        window.location.href = "index.html";
+        return;
+    }
+
+    let totalDesayuno = 0;
+    let totalComida = 0;
+    let totalCena = 0;
+
+    registrosDia.forEach(reg => {
+        if (reg.desayuno && parseFloat(reg.desayuno) > 0) totalDesayuno += parseFloat(reg.desayuno);
+        if (reg.comida && parseFloat(reg.comida) > 0) totalComida += parseFloat(reg.comida);
+        if (reg.cena && parseFloat(reg.cena) > 0) totalCena += parseFloat(reg.cena);
+    });
+
+    console.log("Totales:", { totalDesayuno, totalComida, totalCena });
+
+    const reporteDia = {
+        empleado: {
+            nombre: `${datosUsuario.Nombre} ${datosUsuario.ApellidoPaterno} ${datosUsuario.ApellidoMaterno}`,
+            rpe: datosUsuario.RPE,
+            puesto: datosUsuario.Puesto
+        },
+        registros: registrosDia
+    };
+
+    sessionStorage.setItem('resumenDia', JSON.stringify(reporteDia));
+
+    window.open('../Templates/ResumenDia.html', '_blank');
+}
